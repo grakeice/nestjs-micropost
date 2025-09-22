@@ -1,0 +1,14 @@
+# TYPESCRIPT ------------------------------------------------------------------
+[[language]]
+name = "typescript"
+language-servers = ["typescript-language-server", "eslint"]
+formatter = { command = 'pnpm', args = ["prettier", "--parser", "typescript"] }
+
+[[language]]
+name = "tsx"
+language-servers = [
+  "typescript-language-server",
+  "eslint"
+]
+formatter = { command = 'pnpm', args = ["prettier", "--parser", "typescript"] }
+# -----------------------------------------------------------------------------
