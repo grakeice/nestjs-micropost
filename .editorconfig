@@ -1,0 +1,17 @@
+root = true
+
+[*.{ts,tsx,js,cjs,mjs,jsx,json}]
+indent_style = tab
+indent_size = 4
+
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+[*.{md,markdown}]
+indent_style = space
+indent_size = 4
+
+[*.{html,css}]
+indent_style = tab
+indent_size = 4
