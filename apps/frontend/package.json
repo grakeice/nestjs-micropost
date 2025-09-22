@@ -7,14 +7,18 @@
 		"dev": "vite",
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"prepare": "panda codegen"
 	},
 	"dependencies": {
+		"axios": "^1.12.2",
 		"react": "^19.1.1",
-		"react-dom": "^19.1.1"
+		"react-dom": "^19.1.1",
+		"react-router-dom": "^7.9.1"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.35.0",
+		"@pandacss/dev": "^1.3.1",
 		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
 		"@types/react": "^19.1.13",
 		"@types/react-dom": "^19.1.9",
@@ -27,6 +31,7 @@
 		"prettier": "^3.6.2",
 		"typescript": "~5.8.3",
 		"typescript-eslint": "^8.43.0",
-		"vite": "^7.1.6"
+		"vite": "^7.1.6",
+		"vite-tsconfig-paths": "^5.1.4"
 	}
 }
