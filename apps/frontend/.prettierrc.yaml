@@ -1,2 +1,11 @@
 plugins:
   - "@trivago/prettier-plugin-sort-imports"
+
+importOrderSeparation: true
+importOrder:
+  - "^dotenv/(.*)$"
+  - "^react$"
+  - "^node:"
+  - "<THIRD_PARTY_MODULES>"
+  - "^@/(.*)$"
+  - "^[./]"

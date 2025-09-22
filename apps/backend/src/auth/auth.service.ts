@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import * as crypto from "node:crypto";
+import { createHash } from "node:crypto";
 
 import { Equal, type Repository } from "typeorm";
 
@@ -22,7 +22,7 @@ export class AuthService {
 			throw new UnauthorizedException();
 		}
 
-		const hash = crypto.createHash("md5").update(password).digest("hex");
+		const hash = createHash("md5").update(password).digest("hex");
 		const user = await this.userRepository.findOne({
 			where: {
 				name: Equal(name),
