@@ -1,4 +1,5 @@
 import "dotenv/config";
+
 import { DataSource } from "typeorm";
 
 process.on("beforeExit", () => {

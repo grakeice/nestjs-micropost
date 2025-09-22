@@ -4,3 +4,12 @@ plugins:
 importOrderParserPlugins:
   - "typescript"
   - "decorators-legacy"
+
+importOrderSeparation: true
+importOrder:
+  - "^dotenv/(.*)$"
+  - "^@nestjs/(.*)$"
+  - "^node:"
+  - "<THIRD_PARTY_MODULES>"
+  - "^@/(.*)$"
+  - "^[./]"
