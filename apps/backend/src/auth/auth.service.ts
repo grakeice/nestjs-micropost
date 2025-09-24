@@ -62,5 +62,7 @@ export class AuthService {
 			await this.authRepository.save(record);
 			ret.token = token;
 		}
+
+		return ret;
 	}
 }
