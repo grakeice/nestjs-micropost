@@ -1,8 +1,8 @@
 import { useCallback, type Dispatch, type SetStateAction } from "react";
 
-import { getList } from "@/api/post";
 import type { Post } from "@/providers/PostListProvider";
 import type { UserInfo } from "@/providers/UserProvider";
+import { getList } from "@/services/post";
 
 export function usePostList(
 	userInfo: UserInfo,

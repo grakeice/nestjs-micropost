@@ -3,8 +3,8 @@ import { useContext, useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "styled-system/jsx";
 
-import { signInApi } from "@/api/auth";
 import { UserContext } from "@/providers/UserProvider";
+import { signInApi } from "@/services/auth";
 
 export function SignIn(): JSX.Element {
 	const navigate = useNavigate();

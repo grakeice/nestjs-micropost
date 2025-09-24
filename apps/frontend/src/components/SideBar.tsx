@@ -1,9 +1,9 @@
 import { useContext, useState, type JSX } from "react";
 
-import { createPost } from "@/api/post";
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
+import { createPost } from "@/services/post";
 
 export function SideBar(): JSX.Element {
 	const [message, setMessage] = useState("");
