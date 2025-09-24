@@ -1,9 +1,10 @@
-import { useState, type JSX } from "react";
+import { useContext, useState, type JSX } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Stack } from "styled-system/jsx";
 
 import { signInApi } from "@/api/auth";
+import { UserContext } from "@/providers/UserProvider";
 
 export function SignIn(): JSX.Element {
 	const navigate = useNavigate();
@@ -11,10 +12,13 @@ export function SignIn(): JSX.Element {
 	const [userId, setUserId] = useState("");
 	const [password, setPassword] = useState("");
 
+	const { setUserInfo } = useContext(UserContext);
+
 	const handleSignInClick = async () => {
 		console.log("SignIn Button Clicked");
-		const res = await signInApi(userId, password);
-		if (res.token) {
+		const ret = await signInApi(userId, password);
+		if (ret.token) {
+			setUserInfo({ id: ret.user_id, token: ret.token });
 			navigate("/main");
 		}
 	};

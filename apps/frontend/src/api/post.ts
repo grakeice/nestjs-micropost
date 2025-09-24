@@ -16,3 +16,25 @@ export async function getList(token: string) {
 
 	return res.data;
 }
+
+interface CreatePostArguments {
+	user_id: string;
+	token: string;
+	message: string;
+}
+
+export async function createPost({
+	user_id,
+	token,
+	message,
+}: CreatePostArguments) {
+	const data = { message };
+	const url = new URL("http://127.0.0.1:3000/post");
+	url.searchParams.set("user_id", user_id);
+	url.searchParams.set("token", token);
+
+	const res = await axios.post(url.toString(), data);
+	console.log(res);
+
+	return res;
+}

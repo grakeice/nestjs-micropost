@@ -4,14 +4,17 @@ import { Route, Routes } from "react-router-dom";
 
 import Main from "./pages/main";
 import SignIn from "./pages/signin";
+import { UserProvider } from "./providers/UserProvider";
 
 function App(): JSX.Element {
 	return (
 		<>
-			<Routes>
-				<Route path="/" element={<SignIn />} />
-				<Route path="/main" element={<Main />} />
-			</Routes>
+			<UserProvider>
+				<Routes>
+					<Route path="/" element={<SignIn />} />
+					<Route path="/main" element={<Main />} />
+				</Routes>
+			</UserProvider>
 		</>
 	);
 }

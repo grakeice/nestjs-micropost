@@ -30,7 +30,7 @@ export class PostService {
 			user_id: auth.user_id,
 			content: message,
 		};
-		await this.microPostsRepository.save(record);
+		return await this.microPostsRepository.save(record);
 	}
 
 	async getList(token: string, start: number = 0, nr_records: number = 1) {
