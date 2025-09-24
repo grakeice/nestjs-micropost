@@ -1,5 +1,7 @@
 import { useContext, useEffect, type JSX } from "react";
 
+import { styled } from "styled-system/jsx";
+
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
@@ -19,11 +21,18 @@ export function PostList(): JSX.Element {
 	}, []);
 
 	return (
-		<div>
-			<p>PostList</p>
+		<SPostList>
 			{postList.map((post) => (
 				<Post key={post.id} post={post} />
 			))}
-		</div>
+		</SPostList>
 	);
 }
+
+const SPostList = styled("div", {
+	base: {
+		mt: "16px",
+		h: "full",
+		overflowY: "scroll",
+	},
+});

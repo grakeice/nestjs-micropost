@@ -28,7 +28,7 @@ const SHeader = styled("div", {
 	base: {
 		width: "full",
 		height: "32px",
-		border: "2px solid red",
+		boxShadow: "0px 4px 4px #aaa",
 	},
 });
 
@@ -36,7 +36,6 @@ const SBody = styled("div", {
 	base: {
 		width: "full",
 		height: "calc(100vh - 32px)",
-		border: "2px solid green",
 		display: "flex",
 		flexDir: "row",
 	},
@@ -44,7 +43,7 @@ const SBody = styled("div", {
 
 const SSideBar = styled("div", {
 	base: {
-		border: "2px solid blue",
+		borderRight: "1px solid #222",
 		width: "1/3",
 		height: "full",
 	},
@@ -52,7 +51,6 @@ const SSideBar = styled("div", {
 
 const SContents = styled("div", {
 	base: {
-		border: "2px solid #FF00FF",
 		width: "full",
 		height: "full",
 	},
