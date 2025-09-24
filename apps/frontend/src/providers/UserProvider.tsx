@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
 	createContext,
 	useState,
@@ -7,12 +8,12 @@ import {
 	type SetStateAction,
 } from "react";
 
-interface UserInfo {
+export interface UserInfo {
 	id: number;
 	token: string;
 }
 
-interface IUserContext {
+interface UserContext {
 	userInfo: UserInfo;
 	setUserInfo: Dispatch<SetStateAction<UserInfo>>;
 }
@@ -21,8 +22,7 @@ interface UserProviderProps {
 	children: ReactNode;
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const UserContext = createContext({} as IUserContext);
+export const UserContext = createContext({} as UserContext);
 
 export function UserProvider({ ...props }: UserProviderProps): JSX.Element {
 	const { children } = props;

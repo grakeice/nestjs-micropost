@@ -1,7 +1,12 @@
 import type { JSX } from "react";
 
 import { Layout } from "@/layouts/MainLayout";
+import { PostListProvider } from "@/providers/PostListProvider";
 
 export default function Main(): JSX.Element {
-	return <Layout />;
+	return (
+		<PostListProvider>
+			<Layout />
+		</PostListProvider>
+	);
 }

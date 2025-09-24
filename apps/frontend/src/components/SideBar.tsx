@@ -1,19 +1,25 @@
 import { useContext, useState, type JSX } from "react";
 
 import { createPost } from "@/api/post";
+import { usePostList } from "@/hooks/usePostList";
+import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 
 export function SideBar(): JSX.Element {
 	const [message, setMessage] = useState("");
 
 	const { userInfo } = useContext(UserContext);
+	const { setPostList } = useContext(PostListContext);
 
-	const handleSendButtonClick = () => {
-		createPost({
+	const getPostList = usePostList(userInfo, setPostList);
+
+	const handleSendButtonClick = async () => {
+		await createPost({
 			user_id: String(userInfo.id),
 			token: userInfo.token,
 			message,
 		});
+		await getPostList();
 	};
 
 	return (
