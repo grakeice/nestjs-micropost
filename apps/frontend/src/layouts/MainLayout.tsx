@@ -2,9 +2,9 @@ import type { JSX } from "react";
 
 import { styled } from "styled-system/jsx";
 
-import { Contents } from "./Contents";
-import { Header } from "./Header";
-import { SideBar } from "./SideBar";
+import { Contents } from "@/components/Contents";
+import { Header } from "@/components/Header";
+import { SideBar } from "@/components/SideBar";
 
 export function Layout(): JSX.Element {
 	return (
