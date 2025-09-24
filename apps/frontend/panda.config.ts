@@ -1,3 +1,4 @@
+import { fieldStyles } from "#/field.recipe";
 import { defineConfig } from "@pandacss/dev";
 
 export default defineConfig({
@@ -14,7 +15,11 @@ export default defineConfig({
 
 	// Useful for theme customization
 	theme: {
-		extend: {},
+		extend: {
+			recipes: {
+				fieldStyles,
+			},
+		},
 	},
 
 	// The output directory for your css system
