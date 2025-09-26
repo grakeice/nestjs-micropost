@@ -23,10 +23,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 		"paths": {
-			"@/*": ["./src/*"],
-			"styled-system/*": ["./styled-system/*"],
-			"#/*": ["./src/themes/*"]
+			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["src", "styled-system", "panda.config.ts", "src/themes"]
+	"include": ["src"]
 }

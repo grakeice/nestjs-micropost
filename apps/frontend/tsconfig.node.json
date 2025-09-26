@@ -19,10 +19,7 @@
 		"noUnusedParameters": true,
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
-		"noUncheckedSideEffectImports": true,
-		"paths": {
-			"#/*": ["./src/themes/*"]
-		}
+		"noUncheckedSideEffectImports": true
 	},
-	"include": ["vite.config.ts", "panda.config.ts", "src/themes/**/*"]
+	"include": ["vite.config.ts"]
 }
