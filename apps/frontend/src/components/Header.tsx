@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
+import { Container, Flex } from "@radix-ui/themes";
 import { Link, useNavigate } from "react-router-dom";
 
 import { UserContext } from "@/providers/UserProvider";
@@ -31,22 +32,33 @@ export function Header(): JSX.Element {
 	}, [userInfo.id, userInfo.token, userName]);
 
 	return (
-		<header className="flex h-10 w-dvw flex-row items-center justify-between bg-gray-900 px-2 text-gray-100">
-			<div className="py-2 text-xl font-bold tracking-wide">
-				<Link to={userInfo.token ? "/main" : "/"}>MicroPost</Link>
-			</div>
-			<div className="flex w-full flex-row items-center justify-end">
-				<div className="mr-4 py-2 text-center text-base">
-					{userName}
-				</div>
-				{userInfo.token ? (
-					<Button onClick={logout}>サインアウト</Button>
-				) : (
-					<Button asChild>
-						<Link to="/signup">サインアップ</Link>
-					</Button>
-				)}
-			</div>
-		</header>
+		<Container asChild>
+			<header>
+				<Flex
+					direction={"row"}
+					m={"2"}
+					px={"4"}
+					className={"rounded-full bg-gray-900 text-white"}
+				>
+					<div className="py-2 text-xl font-bold tracking-wide">
+						<Link to={userInfo.token ? "/main" : "/"}>
+							MicroPost
+						</Link>
+					</div>
+					<div className="flex w-full flex-row items-center justify-end">
+						<div className="mr-4 py-2 text-center text-base">
+							{userName}
+						</div>
+						{userInfo.token ? (
+							<Button onClick={logout}>サインアウト</Button>
+						) : (
+							<Button asChild>
+								<Link to="/signup">サインアップ</Link>
+							</Button>
+						)}
+					</div>
+				</Flex>
+			</header>
+		</Container>
 	);
 }
