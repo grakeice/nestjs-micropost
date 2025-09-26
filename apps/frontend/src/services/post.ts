@@ -1,10 +1,13 @@
 import axios from "axios";
 
 type ResultType = {
-	id: string;
-	content: string;
-	user_name: string;
-	created_at: string;
+	posts: {
+		id: string;
+		content: string;
+		user_name: string;
+		created_at: string;
+	}[];
+	length: number;
 };
 
 export async function getList(token: string, start: number = 1) {
@@ -13,7 +16,7 @@ export async function getList(token: string, start: number = 1) {
 	url.searchParams.set("start", start.toString());
 	url.searchParams.set("records", "10");
 
-	const res = await axios.get<ResultType[]>(url.toString());
+	const res = await axios.get<ResultType>(url.toString());
 
 	return res.data;
 }

@@ -7,11 +7,12 @@ import { getList } from "@/services/post";
 export function usePostList(
 	userInfo: UserInfo,
 	setPostList: Dispatch<SetStateAction<Post[]>>,
+	setPostListLength: Dispatch<SetStateAction<number>>,
 ) {
 	return useCallback(
 		async (page: number = 1) => {
-			const posts = await getList(userInfo.token, (page - 1) * 10 + 1);
-			console.log(posts);
+			const data = await getList(userInfo.token, (page - 1) * 10 + 1);
+			const posts = data.posts;
 
 			const postList: Post[] = [];
 
@@ -25,8 +26,9 @@ export function usePostList(
 					});
 				}
 				setPostList(postList);
+				setPostListLength(data.length);
 			}
 		},
-		[setPostList, userInfo.token],
+		[setPostList, setPostListLength, userInfo.token],
 	);
 }

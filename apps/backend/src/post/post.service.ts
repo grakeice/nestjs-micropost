@@ -58,15 +58,20 @@ export class PostService {
 			.limit(nr_records);
 
 		type ResultType = {
-			id: number;
-			content: string;
-			user_name: string;
-			created_at: Date;
+			posts: {
+				id: number;
+				content: string;
+				user_name: string;
+				created_at: Date;
+			}[];
+			length: number;
 		};
 
 		const records = await qb.getRawMany<ResultType>();
+		const length = await this.microPostsRepository.count();
 		console.log(records);
+		console.log(length);
 
-		return records;
+		return { posts: records, length };
 	}
 }

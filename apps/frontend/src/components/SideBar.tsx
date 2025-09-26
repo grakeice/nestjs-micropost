@@ -12,9 +12,9 @@ export function SideBar(): JSX.Element {
 	const [message, setMessage] = useState("");
 
 	const { userInfo } = useContext(UserContext);
-	const { setPostList } = useContext(PostListContext);
+	const { setPostList, setPostListLength } = useContext(PostListContext);
 
-	const getPostList = usePostList(userInfo, setPostList);
+	const getPostList = usePostList(userInfo, setPostList, setPostListLength);
 
 	const handleSendButtonClick = async () => {
 		await createPost({

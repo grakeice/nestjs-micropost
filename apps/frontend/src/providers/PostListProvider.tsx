@@ -18,6 +18,8 @@ export interface Post {
 interface PostListContext {
 	postList: Post[];
 	setPostList: Dispatch<SetStateAction<Post[]>>;
+	postListLength: number;
+	setPostListLength: Dispatch<SetStateAction<number>>;
 }
 
 interface PostListContentProps {
@@ -31,9 +33,12 @@ export function PostListProvider({
 }: PostListContentProps): JSX.Element {
 	const { children } = props;
 	const [postList, setPostList] = useState<Post[]>([]);
+	const [postListLength, setPostListLength] = useState(0);
 
 	return (
-		<PostListContext.Provider value={{ postList, setPostList }}>
+		<PostListContext.Provider
+			value={{ postList, setPostList, postListLength, setPostListLength }}
+		>
 			{children}
 		</PostListContext.Provider>
 	);
