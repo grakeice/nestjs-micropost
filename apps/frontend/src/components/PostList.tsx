@@ -32,12 +32,17 @@ export function PostList(): JSX.Element {
 	return (
 		<div className="py-4 h-full">
 			<Flex direction={"column"} align={"center"} height={"100%"}>
-				<Flex direction={"column"} width={"100%"} overflowY={"scroll"}>
+				<Flex
+					direction={"column"}
+					width={"100%"}
+					overflowY={"scroll"}
+					flexGrow={"1"}
+				>
 					{postList.map((post) => (
 						<Post key={post.id} post={post} />
 					))}
 				</Flex>
-				<Flex gap={"2"} direction={"row"}>
+				<Flex gap={"2"} direction={"row"} flexGrow={"0"}>
 					<Button
 						variant={"secondary"}
 						onClick={handlePrevButtonClick}
