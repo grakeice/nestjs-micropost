@@ -7,9 +7,10 @@ type ResultType = {
 	created_at: string;
 };
 
-export async function getList(token: string) {
+export async function getList(token: string, start: number = 1) {
 	const url = new URL("http://127.0.0.1:3000/post");
 	url.searchParams.set("token", token);
+	url.searchParams.set("start", start.toString());
 	url.searchParams.set("records", "10");
 
 	const res = await axios.get<ResultType[]>(url.toString());

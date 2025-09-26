@@ -8,22 +8,25 @@ export function usePostList(
 	userInfo: UserInfo,
 	setPostList: Dispatch<SetStateAction<Post[]>>,
 ) {
-	return useCallback(async () => {
-		const posts = await getList(userInfo.token);
-		console.log(posts);
+	return useCallback(
+		async (page: number = 1) => {
+			const posts = await getList(userInfo.token, (page - 1) * 10 + 1);
+			console.log(posts);
 
-		const postList: Post[] = [];
+			const postList: Post[] = [];
 
-		if (posts) {
-			for (const post of posts) {
-				postList.push({
-					id: Number(post.id),
-					userName: post.user_name,
-					content: post.content,
-					createdAt: new Date(post.created_at),
-				});
+			if (posts) {
+				for (const post of posts) {
+					postList.push({
+						id: Number(post.id),
+						userName: post.user_name,
+						content: post.content,
+						createdAt: new Date(post.created_at),
+					});
+				}
+				setPostList(postList);
 			}
-			setPostList(postList);
-		}
-	}, [setPostList, userInfo.token]);
+		},
+		[setPostList, userInfo.token],
+	);
 }
