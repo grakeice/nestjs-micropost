@@ -1,0 +1,12 @@
+{
+	"servers": {
+		"ark-ui": {
+			"command": "pnpm",
+			"args": ["dlx", "@ark-ui/mcp"]
+		},
+		"shadcn": {
+			"command": "pnpm",
+			"args": ["dlx", "shadcn@latest", "mcp"]
+		}
+	}
+}
