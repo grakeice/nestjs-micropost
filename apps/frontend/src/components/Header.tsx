@@ -38,7 +38,7 @@ export function Header(): JSX.Element {
 					direction={"row"}
 					m={"2"}
 					px={"4"}
-					className={"rounded-full bg-gray-900 text-white"}
+					className={"rounded-full bg-white border-gray-100 border-2"}
 				>
 					<div className="py-2 text-xl font-bold tracking-wide">
 						<Link to={userInfo.token ? "/main" : "/"}>
@@ -50,9 +50,11 @@ export function Header(): JSX.Element {
 							{userName}
 						</div>
 						{userInfo.token ? (
-							<Button onClick={logout}>サインアウト</Button>
+							<Button onClick={logout} variant={"ghost"}>
+								サインアウト
+							</Button>
 						) : (
-							<Button asChild>
+							<Button asChild variant={"ghost"}>
 								<Link to="/signup">サインアップ</Link>
 							</Button>
 						)}
