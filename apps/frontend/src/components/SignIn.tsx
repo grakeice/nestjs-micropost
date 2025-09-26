@@ -48,7 +48,7 @@ export function SignIn(): JSX.Element {
 				</span>
 				<span className="inline-block w-2/3 align-top ml-1">
 					<input
-						type="password"
+						// type="password"
 						id="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}

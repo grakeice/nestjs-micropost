@@ -1,11 +1,14 @@
-import { useContext, useState, type JSX } from "react";
+import { useContext, useEffect, useState, type JSX } from "react";
 
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 import { createPost } from "@/services/post";
+import { getUser } from "@/services/user";
 
 export function SideBar(): JSX.Element {
+	const [userName, setUserName] = useState("");
+	const [userEmail, setUserEmail] = useState("");
 	const [message, setMessage] = useState("");
 
 	const { userInfo } = useContext(UserContext);
@@ -22,10 +25,21 @@ export function SideBar(): JSX.Element {
 		await getPostList();
 	};
 
+	useEffect(() => {
+		(async () => {
+			const user = await getUser({
+				userId: userInfo.id,
+				token: userInfo.token,
+			});
+			setUserName(user.name);
+			setUserEmail(user.email);
+		})();
+	});
+
 	return (
 		<aside className="p-2 w-full max-w-xs bg-white rounded shadow">
-			<div className="my-1 text-left">hoge</div>
-			<div className="my-1 text-left">hode@example.com</div>
+			<div className="my-1 text-left">{userName}</div>
+			<div className="my-1 text-left">{userEmail}</div>
 			<div className="my-1 text-left">
 				<textarea
 					rows={4}

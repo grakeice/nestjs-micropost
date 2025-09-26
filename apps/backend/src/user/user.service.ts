@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	ForbiddenException,
 	Injectable,
 	NotFoundException,
@@ -7,10 +8,13 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 import { createHash } from "node:crypto";
 
+import { validate } from "class-validator";
 import { Equal, MoreThan, type Repository } from "typeorm";
 
 import { Auth } from "@/entities/auth.entity";
 import { User } from "@/entities/user.entity";
+
+import { CreateUserDto } from "./dto/createUser.dto";
 
 @Injectable()
 export class UserService {
@@ -43,9 +47,14 @@ export class UserService {
 		return user;
 	}
 
-	async createUser(name: string, email: string, password: string) {
+	async createUser({ name, email, password }: CreateUserDto) {
 		const hash = createHash("md5").update(password).digest("hex");
-		const record = { name, email, hash };
-		await this.userRepository.save(record);
+		const record = new CreateUserDto({ name, email, password });
+		const errors = await validate(record);
+		if (errors.length > 0) {
+			throw new BadRequestException(errors);
+		} else {
+			await this.userRepository.save({ name, email, hash });
+		}
 	}
 }

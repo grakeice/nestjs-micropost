@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,15 +12,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthLayout } from "@/layouts/AuthLayout";
+import { createUser } from "@/services/user";
 
-interface SignUpFormValues {
-	username: string;
-	email: string;
-	password: string;
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const formSchema = z.object({
+	username: z.string().min(2).max(50),
+	email: z.email(),
+	password: z.string(),
+});
 
 export default function SignUp() {
-	const form = useForm<SignUpFormValues>({
+	const form = useForm<z.infer<typeof formSchema>>({
 		defaultValues: {
 			username: "",
 			email: "",
@@ -28,8 +31,13 @@ export default function SignUp() {
 		mode: "onBlur",
 	});
 
-	const onSubmit = (values: SignUpFormValues) => {
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		// サインアップAPI呼び出しなど
+		await createUser({
+			name: values.username,
+			email: values.email,
+			password: values.password,
+		});
 		console.log(values);
 	};
 
@@ -50,6 +58,7 @@ export default function SignUp() {
 									<FormControl>
 										<Input
 											placeholder="ユーザー名"
+											// autoComplete={"username"}
 											{...field}
 										/>
 									</FormControl>
@@ -65,8 +74,9 @@ export default function SignUp() {
 									<FormLabel>email</FormLabel>
 									<FormControl>
 										<Input
-											type="email"
+											// type="email"
 											placeholder="email"
+											// autoComplete={"email"}
 											{...field}
 										/>
 									</FormControl>
@@ -82,8 +92,9 @@ export default function SignUp() {
 									<FormLabel>パスワード</FormLabel>
 									<FormControl>
 										<Input
-											type="password"
+											// type="password"
 											placeholder="パスワード"
+											// autoComplete={"new-password"}
 											{...field}
 										/>
 									</FormControl>

@@ -1,9 +1,18 @@
 import type { JSX, ReactNode } from "react";
 
+import { Container } from "@radix-ui/themes";
+
+import { Header } from "@/components/Header";
+
 interface AuthLayoutProps {
 	children?: ReactNode;
 }
 
 export function AuthLayout({ children }: AuthLayoutProps): JSX.Element {
-	return <div>{children}</div>;
+	return (
+		<Container>
+			<Header />
+			{children}
+		</Container>
+	);
 }
