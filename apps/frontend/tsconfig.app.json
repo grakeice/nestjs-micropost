@@ -23,9 +23,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
 		"paths": {
-			"@/*": ["./src/*"],
-			"styled-system/*": ["./styled-system/*"]
+			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["src", "styled-system"]
+	"include": ["src"]
 }
