@@ -1,19 +1,33 @@
 import type { JSX } from "react";
 
 import { Field } from "@ark-ui/react";
+import { Container, VStack } from "styled-system/jsx";
 import { fieldStyles } from "styled-system/recipes";
 
-const fieldClass = fieldStyles();
-
 export default function SignUp(): JSX.Element {
+	const fieldClass = fieldStyles();
 	return (
-		<div>
-			<Field.Root className={fieldClass.root}>
-				<Field.Label className={fieldClass.label}>Label</Field.Label>
-				<Field.Input />
-				<Field.HelperText>Some additional Info</Field.HelperText>
-				<Field.ErrorText>Error Info</Field.ErrorText>
-			</Field.Root>
-		</div>
+		<Container>
+			<VStack>
+				<Field.Root className={fieldClass.root}>
+					<Field.Label className={fieldClass.label}>
+						ユーザー名
+					</Field.Label>
+					<Field.Input className={fieldClass.input} />
+				</Field.Root>
+				<Field.Root className={fieldClass.root}>
+					<Field.Label className={fieldClass.label}>
+						email
+					</Field.Label>
+					<Field.Input className={fieldClass.input} />
+				</Field.Root>
+				<Field.Root className={fieldClass.root}>
+					<Field.Label className={fieldClass.label}>
+						パスワード
+					</Field.Label>
+					<Field.Input className={fieldClass.input} />
+				</Field.Root>
+			</VStack>
+		</Container>
 	);
 }
