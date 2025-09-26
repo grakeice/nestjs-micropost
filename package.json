@@ -15,6 +15,6 @@
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
-    "turbo": "^2.5.7"
+    "turbo": "^2.5.8"
   }
 }
