@@ -24,9 +24,8 @@
 		"noUncheckedSideEffectImports": true,
 		"paths": {
 			"@/*": ["./src/*"],
-			"styled-system/*": ["./styled-system/*"],
-			"#/*": ["./src/themes/*"]
+			"styled-system/*": ["./styled-system/*"]
 		}
 	},
-	"include": ["src", "styled-system", "panda.config.ts", "src/themes"]
+	"include": ["src", "styled-system"]
 }

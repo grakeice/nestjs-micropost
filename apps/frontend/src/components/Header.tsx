@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { styled } from "styled-system/jsx";
 
 import { UserContext } from "@/providers/UserProvider";
 import { getUser } from "@/services/user";
@@ -29,55 +28,21 @@ export function Header(): JSX.Element {
 	});
 
 	return (
-		<SHeader>
-			<SLogo>MicroPost</SLogo>
-			<SRightItem>
-				<SName>{userName}</SName>
-				<SLogout onClick={logout}>ログアウト</SLogout>
-			</SRightItem>
-		</SHeader>
+		<header className="bg-gray-900 flex flex-row text-gray-100 px-2 h-full items-center justify-between">
+			<div className="py-2 text-xl font-bold tracking-wide">
+				MicroPost
+			</div>
+			<div className="flex flex-row items-center justify-end w-full">
+				<div className="py-2 text-center mr-4 text-base">
+					{userName}
+				</div>
+				<button
+					onClick={logout}
+					className="py-2 text-center px-3 rounded hover:bg-gray-800 transition text-sm font-semibold"
+				>
+					ログアウト
+				</button>
+			</div>
+		</header>
 	);
 }
-
-const SHeader = styled("header", {
-	base: {
-		bgColor: "#222",
-		display: "flex",
-		flexDir: "row",
-		color: "#f8f8f8",
-		px: "8px",
-		h: "full",
-	},
-});
-
-const SLogo = styled("div", {
-	base: {
-		py: "8px",
-		textAlign: "center",
-		justifyContent: "start",
-	},
-});
-
-const SRightItem = styled("div", {
-	base: {
-		w: "full",
-		display: "flex",
-		flexDir: "row",
-		justifyContent: "end",
-	},
-});
-
-const SName = styled("div", {
-	base: {
-		py: "8px",
-		textAlign: "center",
-		mr: "8px",
-	},
-});
-
-const SLogout = styled("div", {
-	base: {
-		py: "8px",
-		textAlign: "center",
-	},
-});
