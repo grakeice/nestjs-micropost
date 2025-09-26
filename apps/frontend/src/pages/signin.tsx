@@ -1,7 +1,12 @@
 import type { JSX } from "react";
 
-import { SignInLayout } from "@/layouts/SignInLayout";
+import { SignIn as SignInComponent } from "@/components/SignIn";
+import { AuthLayout } from "@/layouts/AuthLayout";
 
 export default function SignIn(): JSX.Element {
-	return <SignInLayout />;
+	return (
+		<AuthLayout>
+			<SignInComponent />
+		</AuthLayout>
+	);
 }

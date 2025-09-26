@@ -1,8 +1,13 @@
-import { Contents } from "@/components/Contents";
+import type { ReactNode } from "react";
+
 import { Header } from "@/components/Header";
 import { SideBar } from "@/components/SideBar";
 
-export function Layout() {
+interface MainLayoutProps {
+	children?: ReactNode;
+}
+
+export function Layout({ children }: MainLayoutProps) {
 	return (
 		<>
 			<div className="w-full h-8 shadow-md">
@@ -12,9 +17,7 @@ export function Layout() {
 				<div className="border-r border-gray-900 w-1/3 h-full">
 					<SideBar />
 				</div>
-				<div className="w-full h-full">
-					<Contents />
-				</div>
+				<div className="w-full h-full">{children}</div>
 			</div>
 		</>
 	);
