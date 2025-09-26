@@ -10,9 +10,9 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ children }: AuthLayoutProps): JSX.Element {
 	return (
-		<Container>
+		<>
 			<Header />
-			{children}
-		</Container>
+			<Container>{children}</Container>
+		</>
 	);
 }
