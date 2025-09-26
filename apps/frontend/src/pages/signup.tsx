@@ -1,58 +1,99 @@
-import type { JSX } from "react";
+import { useForm } from "react-hook-form";
 
-export default function SignUp(): JSX.Element {
+import { Button } from "@/components/ui/button";
+import {
+	Form,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormControl,
+	FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+interface SignUpFormValues {
+	username: string;
+	email: string;
+	password: string;
+}
+
+export default function SignUp() {
+	const form = useForm<SignUpFormValues>({
+		defaultValues: {
+			username: "",
+			email: "",
+			password: "",
+		},
+		mode: "onBlur",
+	});
+
+	const onSubmit = (values: SignUpFormValues) => {
+		// サインアップAPI呼び出しなど
+		console.log(values);
+	};
+
 	return (
 		<div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow flex flex-col gap-6">
-			<form className="flex flex-col gap-6">
-				<div className="flex flex-col gap-1">
-					<label
-						htmlFor="username"
-						className="text-lg font-semibold text-gray-700"
-					>
-						ユーザー名
-					</label>
-					<input
-						id="username"
-						name="username"
-						type="text"
-						className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
-					/>
-				</div>
-				<div className="flex flex-col gap-1">
-					<label
-						htmlFor="email"
-						className="text-lg font-semibold text-gray-700"
-					>
-						email
-					</label>
-					<input
-						id="email"
-						name="email"
-						type="email"
-						className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
-					/>
-				</div>
-				<div className="flex flex-col gap-1">
-					<label
-						htmlFor="password"
-						className="text-lg font-semibold text-gray-700"
-					>
-						パスワード
-					</label>
-					<input
-						id="password"
-						name="password"
-						type="password"
-						className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400"
-					/>
-				</div>
-				<button
-					type="submit"
-					className="mt-4 bg-amber-500 text-white font-bold py-2 px-4 rounded hover:bg-amber-600 transition"
+			<Form {...form}>
+				<form
+					onSubmit={form.handleSubmit(onSubmit)}
+					className="flex flex-col gap-6"
 				>
-					登録
-				</button>
-			</form>
+					<FormField
+						control={form.control}
+						name="username"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>ユーザー名</FormLabel>
+								<FormControl>
+									<Input
+										placeholder="ユーザー名"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="email"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>email</FormLabel>
+								<FormControl>
+									<Input
+										type="email"
+										placeholder="email"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="password"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>パスワード</FormLabel>
+								<FormControl>
+									<Input
+										type="password"
+										placeholder="パスワード"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<Button type="submit" className="mt-4 w-full">
+						登録
+					</Button>
+				</form>
+			</Form>
 		</div>
 	);
 }
