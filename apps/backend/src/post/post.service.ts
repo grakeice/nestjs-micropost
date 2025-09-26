@@ -70,7 +70,6 @@ export class PostService {
 		const records = await qb.getRawMany<ResultType>();
 		const length = await this.microPostsRepository.count();
 		console.log(records);
-		console.log(length);
 
 		return { posts: records, length };
 	}
