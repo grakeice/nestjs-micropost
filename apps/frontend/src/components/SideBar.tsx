@@ -8,6 +8,7 @@ import { UserContext } from "@/providers/UserProvider";
 import { createPost } from "@/services/post";
 import { getUser } from "@/services/user";
 import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
 
 export function SideBar(): JSX.Element {
 	const [userName, setUserName] = useState("");
@@ -45,12 +46,11 @@ export function SideBar(): JSX.Element {
 				<div className="my-1 text-left">{userName}</div>
 				<div className="my-1 text-left">{userEmail}</div>
 				<div className="my-1 text-left">
-					<textarea
-						rows={4}
+					<Textarea
+						className={"h-30"}
 						value={message}
 						onChange={(e) => setMessage(e.target.value)}
-						className="w-full resize-none rounded border border-gray-300 p-2 shadow-inner focus:ring-2 focus:ring-amber-400 focus:outline-none"
-					></textarea>
+					></Textarea>
 				</div>
 				<div className="my-1 text-right">
 					<Button

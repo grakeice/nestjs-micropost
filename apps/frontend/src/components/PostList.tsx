@@ -34,12 +34,12 @@ export function PostList(): JSX.Element {
 	}, [page]);
 
 	const handlePrevButtonClick = () => {
-		if (page > 1) setPage(page - 1);
+		if (page > 1) setPage((prev) => prev - 1);
 		else setPage(1);
 	};
 
 	const handleNextButtonClick = () => {
-		if (Math.ceil(postListLength / 10) > page) setPage(page + 1);
+		if (Math.ceil(postListLength / 10) > page) setPage((prev) => prev + 1);
 		else setPage(page);
 	};
 
@@ -80,7 +80,7 @@ export function PostList(): JSX.Element {
 						更新
 					</Button>
 				</div>
-				<Pagination className={"select-none w-1/3 flex-1"}>
+				<Pagination className={"w-1/3 flex-1 select-none"}>
 					<PaginationContent>
 						<PaginationItem>
 							<PaginationPrevious

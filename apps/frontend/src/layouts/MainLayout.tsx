@@ -16,7 +16,7 @@ export function Layout({ children }: MainLayoutProps) {
 				<Header />
 			</div>
 			<Container height={"100%"} width={"100%"}>
-				<Flex height={"100%"} width={"100%"} p={"4"}>
+				<Flex height={"100%"} width={"100%"} p={"2"}>
 					<div className="h-full w-1/3 border-gray-900">
 						<SideBar />
 					</div>
