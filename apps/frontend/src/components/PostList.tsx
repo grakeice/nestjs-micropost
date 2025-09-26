@@ -30,33 +30,25 @@ export function PostList(): JSX.Element {
 		setPage((prev) => prev + 1);
 	};
 	return (
-		<div className="py-4 h-full">
-			<Flex direction={"column"} align={"center"} height={"100%"}>
-				<Flex
-					direction={"column"}
-					width={"100%"}
-					overflowY={"scroll"}
-					flexGrow={"1"}
-				>
-					{postList.map((post) => (
-						<Post key={post.id} post={post} />
-					))}
-				</Flex>
-				<Flex gap={"2"} direction={"row"} flexGrow={"0"}>
-					<Button
-						variant={"secondary"}
-						onClick={handlePrevButtonClick}
-					>
-						Prev
-					</Button>
-					<Button
-						variant={"secondary"}
-						onClick={handleNextButtonClick}
-					>
-						Next
-					</Button>
-				</Flex>
+		<Flex py={"4"} direction={"column"} align={"center"} height={"100%"}>
+			<Flex
+				direction={"column"}
+				width={"100%"}
+				overflowY={"scroll"}
+				flexGrow={"1"}
+			>
+				{postList.map((post) => (
+					<Post key={post.id} post={post} />
+				))}
 			</Flex>
-		</div>
+			<Flex gap={"2"} direction={"row"} flexGrow={"0"}>
+				<Button variant={"secondary"} onClick={handlePrevButtonClick}>
+					Prev
+				</Button>
+				<Button variant={"secondary"} onClick={handleNextButtonClick}>
+					Next
+				</Button>
+			</Flex>
+		</Flex>
 	);
 }
