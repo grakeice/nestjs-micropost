@@ -11,7 +11,7 @@ export function usePostList(
 ) {
 	return useCallback(
 		async (page: number = 1) => {
-			const data = await getList(userInfo.token, (page - 1) * 10 + 1);
+			const data = await getList(userInfo.token, (page - 1) * 10);
 			const posts = data.posts;
 
 			const postList: Post[] = [];

@@ -24,10 +24,7 @@ export function Post({ ...props }: PostProps): JSX.Element {
 	};
 
 	return (
-		<div
-			{..._props}
-			className="my-2 border-b border-gray-300 text-left pl-2 pb-2"
-		>
+		<div {..._props} className="border-gray-300 text-left pl-2">
 			<div>
 				<span className="text-sm text-blue-900 font-semibold">
 					{post.userName}
@@ -36,7 +33,7 @@ export function Post({ ...props }: PostProps): JSX.Element {
 					{formatDate(post.createdAt)}
 				</span>
 			</div>
-			<div className="whitespace-pre-wrap mt-1 text-base text-gray-800">
+			<div className="whitespace-pre-wrap text-base text-gray-800">
 				{post.content}
 			</div>
 		</div>

@@ -1,14 +1,15 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
-import { Flex } from "@radix-ui/themes";
+import { Flex, Separator } from "@radix-ui/themes";
 import clsx from "clsx";
+import { RefreshCcw } from "lucide-react";
 
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 
 import { Post } from "./Post";
-// import { Button } from "./ui/button";
+import { Button } from "./ui/button";
 import {
 	Pagination,
 	PaginationContent,
@@ -41,26 +42,45 @@ export function PostList(): JSX.Element {
 		if (Math.ceil(postListLength / 10) > page) setPage(page + 1);
 		else setPage(page);
 	};
+
+	const handleReloadButtonClick = () => {
+		getPostList(page);
+	};
+
 	return (
-		<Flex py={"4"} direction={"column"} align={"center"} height={"100%"}>
+		<Flex p={"4"} direction={"column"} align={"center"} height={"100%"}>
 			<Flex
 				direction={"column"}
 				width={"100%"}
 				overflowY={"scroll"}
 				flexGrow={"1"}
+				gap={"3"}
 			>
 				{postList.map((post) => (
-					<Post key={post.id} post={post} />
+					<>
+						<Post key={post.id} post={post} />
+						<Separator size={"4"} />
+					</>
 				))}
 			</Flex>
-			<Flex gap={"2"} direction={"row"} flexGrow={"0"}>
-				{/* <Button variant={"secondary"} onClick={handlePrevButtonClick}>
-					Prev
-				</Button>
-				<Button variant={"secondary"} onClick={handleNextButtonClick}>
-					Next
-				</Button> */}
-				<Pagination className={"select-none"}>
+			<Flex
+				gap={"2"}
+				direction={"row"}
+				flexGrow={"0"}
+				justify={"between"}
+				width={"100%"}
+			>
+				<div className={"w-1/3"}>
+					<Button
+						onClick={handleReloadButtonClick}
+						variant={"ghost"}
+						className={"cursor-pointer select-none"}
+					>
+						<RefreshCcw />
+						更新
+					</Button>
+				</div>
+				<Pagination className={"select-none w-1/3 flex-1"}>
 					<PaginationContent>
 						<PaginationItem>
 							<PaginationPrevious
@@ -89,6 +109,7 @@ export function PostList(): JSX.Element {
 						</PaginationItem>
 					</PaginationContent>
 				</Pagination>
+				<div className={"w-1/3"}></div>
 			</Flex>
 		</Flex>
 	);
