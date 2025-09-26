@@ -1,13 +1,14 @@
-import { useContext, useState, type JSX } from "react";
-
-import { styled } from "styled-system/jsx";
+import { useContext, useEffect, useState, type JSX } from "react";
 
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 import { createPost } from "@/services/post";
+import { getUser } from "@/services/user";
 
 export function SideBar(): JSX.Element {
+	const [userName, setUserName] = useState("");
+	const [userEmail, setUserEmail] = useState("");
 	const [message, setMessage] = useState("");
 
 	const { userInfo } = useContext(UserContext);
@@ -24,56 +25,38 @@ export function SideBar(): JSX.Element {
 		await getPostList();
 	};
 
+	useEffect(() => {
+		(async () => {
+			const user = await getUser({
+				userId: userInfo.id,
+				token: userInfo.token,
+			});
+			setUserName(user.name);
+			setUserEmail(user.email);
+		})();
+	});
+
 	return (
-		<SSideBar>
-			<SSideBarRow>hoge</SSideBarRow>
-			<SSideBarRow>hode@example.com</SSideBarRow>
-			<SSideBarRow>
-				<SSideBarTextArea
-					name=""
-					id=""
+		<aside className="p-2 w-full max-w-xs bg-white rounded shadow">
+			<div className="my-1 text-left">{userName}</div>
+			<div className="my-1 text-left">{userEmail}</div>
+			<div className="my-1 text-left">
+				<textarea
 					rows={4}
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
-				></SSideBarTextArea>
-			</SSideBarRow>
-			<SSideBarRow>
-				<SSideBarButton type="button" onClick={handleSendButtonClick}>
+					className="w-full rounded shadow-inner border border-gray-300 p-2 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400"
+				></textarea>
+			</div>
+			<div className="my-1 text-left">
+				<button
+					type="button"
+					onClick={handleSendButtonClick}
+					className="w-full bg-gray-900 text-gray-100 p-2 rounded-lg hover:bg-gray-800 transition"
+				>
 					送信
-				</SSideBarButton>
-			</SSideBarRow>
-		</SSideBar>
+				</button>
+			</div>
+		</aside>
 	);
 }
-
-const SSideBar = styled("aside", {
-	base: {
-		p: "8px",
-	},
-});
-
-const SSideBarRow = styled("div", {
-	base: {
-		mt: "4px",
-		mb: "4px",
-		textAlign: "left",
-	},
-});
-
-const SSideBarTextArea = styled("textarea", {
-	base: {
-		w: "full",
-		borderRadius: "4px",
-		boxShadow: "inset 0 2px 4px #ccc",
-	},
-});
-
-const SSideBarButton = styled("button", {
-	base: {
-		bgColor: "#222",
-		p: "4px",
-		borderRadius: "8px",
-		color: "#fafafa",
-		w: "full",
-	},
-});

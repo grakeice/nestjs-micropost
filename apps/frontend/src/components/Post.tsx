@@ -1,8 +1,5 @@
 import type { ComponentProps, JSX } from "react";
 
-import { css } from "styled-system/css";
-import { styled } from "styled-system/jsx";
-
 import type { Post } from "@/providers/PostListProvider";
 
 interface PostProps extends ComponentProps<"div"> {
@@ -27,42 +24,21 @@ export function Post({ ...props }: PostProps): JSX.Element {
 	};
 
 	return (
-		<SPost {..._props}>
+		<div
+			{..._props}
+			className="my-2 border-b border-gray-300 text-left pl-2 pb-2"
+		>
 			<div>
-				<SName>{post.userName}</SName>
-				<SDate>{formatDate(post.createdAt)}</SDate>
+				<span className="text-sm text-blue-900 font-semibold">
+					{post.userName}
+				</span>
+				<span className="ml-2 text-sm text-blue-900">
+					{formatDate(post.createdAt)}
+				</span>
 			</div>
-			<div
-				className={css({
-					whiteSpace: "pre-wrap",
-				})}
-			>
+			<div className="whitespace-pre-wrap mt-1 text-base text-gray-800">
 				{post.content}
 			</div>
-		</SPost>
+		</div>
 	);
 }
-
-const SPost = styled("div", {
-	base: {
-		m: "8px 0",
-		borderBottom: "1px solid #aaa",
-		textAlign: "left",
-		pl: "8px",
-	},
-});
-
-const SName = styled("span", {
-	base: {
-		fontSize: "sm",
-		color: "#000044",
-	},
-});
-
-const SDate = styled("span", {
-	base: {
-		ml: "8px",
-		fontSize: "sm",
-		color: "#000044",
-	},
-});
