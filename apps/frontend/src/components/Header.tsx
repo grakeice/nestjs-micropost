@@ -2,6 +2,7 @@ import { useContext, useEffect, useState, type JSX } from "react";
 
 import { Container, Flex } from "@radix-ui/themes";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import { UserContext } from "@/providers/UserProvider";
 import { getUser } from "@/services/user";
@@ -20,6 +21,7 @@ export function Header(): JSX.Element {
 		document.cookie = "user_id=0";
 		document.cookie = "token=";
 		navigate("/");
+		toast("サインアウトしました");
 	};
 
 	useEffect(() => {

@@ -35,7 +35,7 @@ export default function SignIn(): JSX.Element {
 
 	const onSubmit = async (values: SignInFormValues) => {
 		const ret = await signInApi(values.userId, values.password);
-		if (ret.token) {
+		if (ret?.token) {
 			setUserInfo({ id: ret.user_id, token: ret.token });
 			navigate("/main");
 		}

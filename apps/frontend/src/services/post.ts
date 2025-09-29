@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "sonner";
 
 type ResultType = {
 	posts: {
@@ -54,8 +55,12 @@ export async function deletePost({ token, messageId }: DeletePostArguments) {
 	const url = new URL(String(messageId), base);
 	url.searchParams.set("token", token);
 
-	const res = await axios.delete(url.toString());
-	console.log(res);
-
-	return res;
+	try {
+		const res = await axios.delete(url.toString());
+		console.log(res);
+		toast("ポストを削除しました");
+		return res;
+	} catch {
+		toast.error("ポストの削除中に問題が発生しました");
+	}
 }

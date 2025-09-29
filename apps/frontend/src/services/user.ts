@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "sonner";
 
 interface getUserArguments {
 	userId: number;
@@ -31,7 +32,12 @@ export async function getUser({ userId, token }: getUserArguments) {
 }
 
 export async function createUser({ ...data }: createUserArguments) {
-	const url = new URL("http://127.0.0.1:3000/user/");
-	const res = await axios.post(url.toString(), data);
-	console.log(res.status);
+	try {
+		const url = new URL("http://127.0.0.1:3000/user/");
+		const res = await axios.post(url.toString(), data);
+		console.log(res.status);
+		toast.success("ユーザー登録に成功しました");
+	} catch {
+		toast.error("ユーザー登録に失敗しました");
+	}
 }

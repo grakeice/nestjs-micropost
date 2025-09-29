@@ -3,6 +3,7 @@ import { useContext, useEffect, useState, type JSX } from "react";
 import { Flex, Separator } from "@radix-ui/themes";
 import clsx from "clsx";
 import { RefreshCcw } from "lucide-react";
+import { toast } from "sonner";
 
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
@@ -44,6 +45,7 @@ export function PostList(): JSX.Element {
 
 	const handleReloadButtonClick = () => {
 		getPostList(page);
+		toast("ポスト一覧を更新しました");
 	};
 
 	return (
