@@ -1,0 +1,10 @@
+[tools]
+node = "24"
+"npm:pnpm" = "latest"
+
+[tasks."frontend:dev"]
+run = "pnpm --filter frontend dev"
+[tasks."backend:dev"]
+run = "pnpm --filter backend start:dev"
+[tasks.dev]
+run = { tasks = ["frontend:dev", "backend:dev"] }
