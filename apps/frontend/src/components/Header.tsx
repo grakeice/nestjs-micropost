@@ -36,7 +36,7 @@ export function Header(): JSX.Element {
 	}, [userInfo.id, userInfo.token, userName]);
 
 	return (
-		<Container asChild>
+		<Container asChild className={"h-[4rem]"}>
 			<header>
 				<Flex
 					direction={"row"}

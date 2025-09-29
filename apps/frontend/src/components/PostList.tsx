@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
-import { Flex, Separator } from "@radix-ui/themes";
+import { Flex, Separator, TextField } from "@radix-ui/themes";
 import clsx from "clsx";
-import { RefreshCcw } from "lucide-react";
+import { RefreshCcw, Search } from "lucide-react";
 import { toast } from "sonner";
 
 import { usePostList } from "@/hooks/usePostList";
@@ -49,27 +49,45 @@ export function PostList(): JSX.Element {
 	};
 
 	return (
-		<Flex p={"4"} direction={"column"} align={"center"} height={"100%"}>
-			<Flex
-				direction={"column"}
-				width={"100%"}
-				overflowY={"scroll"}
-				flexGrow={"1"}
-				gap={"3"}
+		<Flex
+			p={"4"}
+			direction={"column"}
+			align={"center"}
+			height={"100%"}
+			position={"relative"}
+			gap={"4"}
+		>
+			<div className={"h-[2rem] w-full flex-0"}>
+				<TextField.Root
+					placeholder="ポストを検索"
+					className={"w-full"}
+					name={"search"}
+				>
+					<TextField.Slot>
+						<Search />
+					</TextField.Slot>
+				</TextField.Root>
+			</div>
+			<div
+				className={
+					"w-full flex-1 overflow-y-scroll [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-gray-100"
+				}
 			>
-				{postList.map((post) => (
-					<div key={post.id}>
-						<Post post={post} getPostList={getPostList} />
-						<Separator size={"4"} />
-					</div>
-				))}
-			</Flex>
+				<Flex direction={"column"} width={"100%"} gap={"3"}>
+					{postList.map((post) => (
+						<div key={post.id}>
+							<Post post={post} getPostList={getPostList} />
+							<Separator size={"4"} />
+						</div>
+					))}
+				</Flex>
+			</div>
 			<Flex
 				gap={"2"}
-				direction={"row"}
-				flexGrow={"0"}
 				justify={"between"}
 				width={"100%"}
+				height={"2rem"}
+				className={"flex-0"}
 			>
 				<div className={"w-1/3"}>
 					<Button
