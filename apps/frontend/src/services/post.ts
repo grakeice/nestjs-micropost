@@ -4,6 +4,7 @@ type ResultType = {
 	posts: {
 		id: string;
 		content: string;
+		user_id: string;
 		user_name: string;
 		created_at: string;
 	}[];

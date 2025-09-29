@@ -43,7 +43,7 @@ export default function SignUp() {
 
 	return (
 		<AuthLayout>
-			<div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow flex flex-col gap-6">
+			<div className="mx-auto flex max-w-md flex-col gap-6 rounded-lg bg-white p-8 shadow">
 				<Form {...form}>
 					<form
 						onSubmit={form.handleSubmit(onSubmit)}

@@ -20,6 +20,7 @@ export function usePostList(
 				for (const post of posts) {
 					postList.push({
 						id: Number(post.id),
+						userId: Number(post.user_id),
 						userName: post.user_name,
 						content: post.content,
 						createdAt: new Date(post.created_at),

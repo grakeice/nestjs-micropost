@@ -50,6 +50,7 @@ export class PostService {
 			.select([
 				"micro_post.id as id",
 				"user.name as user_name",
+				"user.id as user_id",
 				"micro_post.content as content",
 				"micro_post.created_at as created_at",
 			])
@@ -61,6 +62,7 @@ export class PostService {
 			posts: {
 				id: number;
 				content: string;
+				user_id: number;
 				user_name: string;
 				created_at: Date;
 			}[];
