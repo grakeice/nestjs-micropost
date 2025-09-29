@@ -13,7 +13,7 @@ function App(): JSX.Element {
 			<UserProvider>
 				<Routes>
 					<Route path="/" element={<SignIn />} />
-					<Route path="signup" element={<SignUp />} />
+					<Route path="/signup" element={<SignUp />} />
 					<Route path="/main" element={<Main />} />
 				</Routes>
 			</UserProvider>

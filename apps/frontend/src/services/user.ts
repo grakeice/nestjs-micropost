@@ -27,9 +27,6 @@ export async function getUser({ userId, token }: getUserArguments) {
 
 	const res = await axios.get<User>(url.toString());
 
-	const expires = new Date(Date.now() + 60 * 60 * 1000).toUTCString();
-	document.cookie = `user_id=${userId}; expires=${expires}; path=/`;
-	document.cookie = `token=${token}; expires=${expires}; path=/`;
 	return res.data;
 }
 
