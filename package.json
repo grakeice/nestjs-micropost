@@ -11,7 +11,7 @@
   "keywords": [],
   "author": "",
   "license": "",
-  "packageManager": "pnpm@10.17.0",
+  "packageManager": "pnpm@10.17.1",
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
