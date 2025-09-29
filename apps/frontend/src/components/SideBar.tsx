@@ -7,6 +7,7 @@ import { PostListContext } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 import { createPost } from "@/services/post";
 import { getUser } from "@/services/user";
+
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 
@@ -26,6 +27,7 @@ export function SideBar(): JSX.Element {
 			token: userInfo.token,
 			message,
 		});
+		setMessage("");
 		await getPostList();
 	};
 
@@ -53,10 +55,7 @@ export function SideBar(): JSX.Element {
 					></Textarea>
 				</div>
 				<div className="my-1 text-right">
-					<Button
-						type="button"
-						onClick={handleSendButtonClick}
-					>
+					<Button type="button" onClick={handleSendButtonClick}>
 						送信
 					</Button>
 				</div>
