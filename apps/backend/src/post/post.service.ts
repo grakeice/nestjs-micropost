@@ -33,7 +33,13 @@ export class PostService {
 		return await this.microPostsRepository.save(record);
 	}
 
-	async getList(token: string, start: number = 0, nr_records: number = 1) {
+	async getList(
+		token: string,
+		start: number = 0,
+		nr_records: number = 1,
+		query?: string,
+	) {
+		// console.log(query);
 		const now = new Date();
 		const auth = await this.authRepository.findOne({
 			where: {
@@ -54,9 +60,19 @@ export class PostService {
 				"micro_post.content as content",
 				"micro_post.created_at as created_at",
 			])
-			.orderBy("micro_post.created_at", "DESC")
-			.offset(start)
-			.limit(nr_records);
+			.orderBy("micro_post.created_at", "DESC");
+
+		if (query) {
+			qb.andWhere("micro_post.content LIKE :query", {
+				query: `%${query}%`,
+			});
+		}
+
+		const length = await qb.getCount();
+
+		qb.offset(start)
+			.limit(nr_records)
+			.orderBy("micro_post.created_at", "DESC");
 
 		type ResultType = {
 			posts: {
@@ -70,8 +86,6 @@ export class PostService {
 		};
 
 		const records = await qb.getRawMany<ResultType>();
-		const length = await this.microPostsRepository.count();
-		console.log(records);
 
 		return { posts: records, length };
 	}

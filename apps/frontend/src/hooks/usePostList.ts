@@ -1,4 +1,9 @@
-import { useCallback, type Dispatch, type SetStateAction } from "react";
+import {
+	useCallback,
+	useState,
+	type Dispatch,
+	type SetStateAction,
+} from "react";
 
 import type { Post } from "@/providers/PostListProvider";
 import type { UserInfo } from "@/providers/UserProvider";
@@ -9,27 +14,39 @@ export function usePostList(
 	setPostList: Dispatch<SetStateAction<Post[]>>,
 	setPostListLength: Dispatch<SetStateAction<number>>,
 ) {
-	return useCallback(
-		async (page: number = 1) => {
-			const data = await getList(userInfo.token, (page - 1) * 10);
-			const posts = data.posts;
+	const [searchText, setSearchText] = useState("");
 
-			const postList: Post[] = [];
+	return {
+		getPostList: useCallback(
+			async (page: number = 1) => {
+				const data = await getList(
+					userInfo.token,
+					(page - 1) * 10,
+					searchText,
+				);
 
-			if (posts) {
-				for (const post of posts) {
-					postList.push({
-						id: Number(post.id),
-						userId: Number(post.user_id),
-						userName: post.user_name,
-						content: post.content,
-						createdAt: new Date(post.created_at),
-					});
+				const posts = data.posts;
+
+				const postList: Post[] = [];
+
+				console.log(data.length);
+
+				if (posts) {
+					for (const post of posts) {
+						postList.push({
+							id: Number(post.id),
+							userId: Number(post.user_id),
+							userName: post.user_name,
+							content: post.content,
+							createdAt: new Date(post.created_at),
+						});
+					}
+					setPostList(postList);
+					setPostListLength(data.length);
 				}
-				setPostList(postList);
-				setPostListLength(data.length);
-			}
-		},
-		[setPostList, setPostListLength, userInfo.token],
-	);
+			},
+			[searchText, setPostList, setPostListLength, userInfo.token],
+		),
+		setSearchText,
+	};
 }

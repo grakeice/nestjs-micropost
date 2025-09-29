@@ -12,11 +12,16 @@ type ResultType = {
 	length: number;
 };
 
-export async function getList(token: string, start: number = 1) {
+export async function getList(
+	token: string,
+	start: number = 1,
+	query?: string,
+) {
 	const url = new URL("http://127.0.0.1:3000/post");
 	url.searchParams.set("token", token);
 	url.searchParams.set("start", start.toString());
 	url.searchParams.set("records", "10");
+	if (query) url.searchParams.set("q", query);
 
 	const res = await axios.get<ResultType>(url.toString());
 

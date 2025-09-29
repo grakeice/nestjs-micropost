@@ -1,8 +1,15 @@
-import { useContext, useEffect, useState, type JSX } from "react";
+import {
+	useContext,
+	useEffect,
+	useState,
+	type ChangeEvent,
+	type JSX,
+} from "react";
 
 import { Flex, Separator, TextField } from "@radix-ui/themes";
 import clsx from "clsx";
 import { RefreshCcw, Search } from "lucide-react";
+import { useDebounce } from "react-use";
 import { toast } from "sonner";
 
 import { usePostList } from "@/hooks/usePostList";
@@ -27,7 +34,13 @@ export function PostList(): JSX.Element {
 
 	const [page, setPage] = useState(1);
 
-	const getPostList = usePostList(userInfo, setPostList, setPostListLength);
+	const [searchText, setSearchText] = useState("");
+
+	const { getPostList, setSearchText: setQuery } = usePostList(
+		userInfo,
+		setPostList,
+		setPostListLength,
+	);
 
 	useEffect(() => {
 		getPostList(page);
@@ -48,6 +61,18 @@ export function PostList(): JSX.Element {
 		toast("ポスト一覧を更新しました");
 	};
 
+	useDebounce(
+		() => {
+			setQuery(searchText);
+		},
+		1000,
+		[searchText],
+	);
+
+	const handleSearchFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setSearchText(e.target.value);
+	};
+
 	return (
 		<Flex
 			p={"4"}
@@ -62,6 +87,8 @@ export function PostList(): JSX.Element {
 					placeholder="ポストを検索"
 					className={"w-full"}
 					name={"search"}
+					value={searchText}
+					onChange={handleSearchFieldChange}
 				>
 					<TextField.Slot>
 						<Search />

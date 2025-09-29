@@ -27,8 +27,9 @@ export class PostController {
 		@Query("token") token: string,
 		@Query("start") start: number,
 		@Query("records") records: number,
+		@Query("q") query?: string,
 	) {
-		return await this.postService.getList(token, start, records);
+		return await this.postService.getList(token, start, records, query);
 	}
 
 	@Delete(":id")
