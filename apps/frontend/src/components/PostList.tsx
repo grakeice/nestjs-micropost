@@ -57,7 +57,7 @@ export function PostList(): JSX.Element {
 			>
 				{postList.map((post) => (
 					<div key={post.id}>
-						<Post post={post} />
+						<Post post={post} getPostList={getPostList} />
 						<Separator size={"4"} />
 					</div>
 				))}

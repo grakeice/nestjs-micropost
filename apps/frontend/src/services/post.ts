@@ -43,3 +43,19 @@ export async function createPost({
 
 	return res;
 }
+
+interface DeletePostArguments {
+	token: string;
+	messageId: number;
+}
+
+export async function deletePost({ token, messageId }: DeletePostArguments) {
+	const base = new URL("http://127.0.0.1:3000/post/[messageId]");
+	const url = new URL(String(messageId), base);
+	url.searchParams.set("token", token);
+
+	const res = await axios.delete(url.toString());
+	console.log(res);
+
+	return res;
+}

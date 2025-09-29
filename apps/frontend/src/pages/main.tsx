@@ -11,7 +11,7 @@ export default function Main(): JSX.Element {
 	const { userInfo } = useContext(UserContext);
 	const loggedIn = userInfo.token !== "";
 
-	console.log(loggedIn);
+	// console.log(loggedIn);
 
 	return (
 		<PostListProvider>

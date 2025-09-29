@@ -5,6 +5,7 @@ import { Trash } from "lucide-react";
 
 import type { Post } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
+import { deletePost } from "@/services/post";
 
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { Button } from "./ui/button";
@@ -12,10 +13,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface PostProps extends ComponentProps<"div"> {
 	post: Post;
+	getPostList: (page?: number) => Promise<void>;
 }
 
 export function Post({ ...props }: PostProps): JSX.Element {
-	const { post, ..._props } = props;
+	const { post, getPostList, ..._props } = props;
 
 	const { userInfo } = useContext(UserContext);
 
@@ -37,7 +39,16 @@ export function Post({ ...props }: PostProps): JSX.Element {
 
 	const handleCancelDeleteButtonClick = () => setIsPopoverOpen(false);
 
-	const handleDeleteButtonClick = () => {};
+	const handleDeleteButtonClick = async () => {
+		try {
+			await deletePost({ token: userInfo.token, messageId: post.id });
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setIsPopoverOpen(false);
+			getPostList();
+		}
+	};
 
 	return (
 		<div
@@ -64,7 +75,7 @@ export function Post({ ...props }: PostProps): JSX.Element {
 				)}
 			>
 				<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-					<PopoverTrigger>
+					<PopoverTrigger asChild>
 						{post.userId === userInfo.id && (
 							<Button
 								variant={"ghost"}

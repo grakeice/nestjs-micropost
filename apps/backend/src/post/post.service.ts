@@ -75,4 +75,18 @@ export class PostService {
 
 		return { posts: records, length };
 	}
+
+	async deletePost(token: string, messageId: number) {
+		const now = new Date();
+		const auth = await this.authRepository.findOne({
+			where: {
+				token: Equal(token),
+				expire_at: MoreThan(now),
+			},
+		});
+
+		if (!auth) throw new ForbiddenException();
+
+		await this.microPostsRepository.delete(messageId);
+	}
 }
