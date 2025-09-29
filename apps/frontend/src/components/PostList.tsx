@@ -30,8 +30,7 @@ export function PostList(): JSX.Element {
 
 	useEffect(() => {
 		getPostList(page);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page]);
+	}, [getPostList, page]);
 
 	const handlePrevButtonClick = () => {
 		if (page > 1) setPage((prev) => prev - 1);
@@ -57,10 +56,10 @@ export function PostList(): JSX.Element {
 				gap={"3"}
 			>
 				{postList.map((post) => (
-					<>
-						<Post key={post.id} post={post} />
+					<div key={post.id}>
+						<Post post={post} />
 						<Separator size={"4"} />
-					</>
+					</div>
 				))}
 			</Flex>
 			<Flex
@@ -91,7 +90,7 @@ export function PostList(): JSX.Element {
 							(i) => {
 								const pageNum = i + 1;
 								return (
-									<PaginationItem>
+									<PaginationItem key={i}>
 										<PaginationLink
 											className={clsx(
 												pageNum === page && "bg-accent",

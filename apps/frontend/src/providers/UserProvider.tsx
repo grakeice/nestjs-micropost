@@ -26,7 +26,15 @@ export const UserContext = createContext({} as UserContext);
 
 export function UserProvider({ ...props }: UserProviderProps): JSX.Element {
 	const { children } = props;
-	const [userInfo, setUserInfo] = useState<UserInfo>({ id: 0, token: "" });
+	const getUserInfoFromCookie = (): UserInfo => {
+		const cookies = Object.fromEntries(
+			document.cookie.split("; ").map((c) => c.split("=")),
+		);
+		const id = cookies.user_id ? Number(cookies.user_id) : 0;
+		const token = cookies.token || "";
+		return { id, token };
+	};
+	const [userInfo, setUserInfo] = useState<UserInfo>(getUserInfoFromCookie());
 	return (
 		<UserContext.Provider value={{ userInfo, setUserInfo }}>
 			{children}

@@ -17,6 +17,8 @@ export function Header(): JSX.Element {
 
 	const logout = () => {
 		setUserInfo({ id: 0, token: "" });
+		document.cookie = "user_id=0";
+		document.cookie = "token=";
 		navigate("/");
 	};
 

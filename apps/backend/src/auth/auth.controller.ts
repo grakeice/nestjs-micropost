@@ -1,4 +1,6 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Query, Res } from "@nestjs/common";
+
+import type { Response } from "express";
 
 import { AuthService } from "./auth.service";
 
@@ -10,8 +12,12 @@ export class AuthController {
 	async getAuth(
 		@Query("user_id") name: string,
 		@Query("password") password: string,
+		@Res() res: Response,
 	) {
 		console.log(`${name} has logged in`);
-		return await this.authService.getAuth(name, password);
+		const result = await this.authService.getAuth(name, password);
+		res.cookie("user_id", result.user_id, { httpOnly: false });
+		res.cookie("token", result.token, { httpOnly: false });
+		return res.json(result);
 	}
 }

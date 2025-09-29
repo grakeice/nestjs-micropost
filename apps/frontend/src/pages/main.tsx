@@ -2,7 +2,7 @@ import { useContext, type JSX } from "react";
 
 import { Navigate } from "react-router-dom";
 
-import { Contents } from "@/components/Contents";
+import { PostList } from "@/components/PostList";
 import { Layout } from "@/layouts/MainLayout";
 import { PostListProvider } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
@@ -17,7 +17,7 @@ export default function Main(): JSX.Element {
 		<PostListProvider>
 			{loggedIn ? (
 				<Layout>
-					<Contents />
+					<PostList />
 				</Layout>
 			) : (
 				<Navigate replace to={"/"} />
