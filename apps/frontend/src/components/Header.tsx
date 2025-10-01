@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
 import { Container, Flex } from "@radix-ui/themes";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, User } from "lucide-react";
 import { motion } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -70,7 +70,7 @@ export function Header(): JSX.Element {
 											<AvatarFallback>
 												{userName !== ""
 													? userName
-													: "?"}
+													: <User />}
 											</AvatarFallback>
 										</Avatar>
 										<motion.div

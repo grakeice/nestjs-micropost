@@ -61,7 +61,6 @@ export default function UserPage(): JSX.Element {
 
 	return (
 		<Layout>
-			<div>ユーザー編集ページだよ〜</div>
 			<div className="mx-auto flex max-w-md flex-col gap-6 rounded-lg bg-white p-8 shadow">
 				<Form {...form}>
 					<form
