@@ -21,7 +21,7 @@ const formSchema = z.object({
 	password: z.string(),
 });
 
-export default function SignUp() {
+export default function SignUpPage() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		defaultValues: {
 			username: "",

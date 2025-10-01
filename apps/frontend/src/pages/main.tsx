@@ -7,7 +7,7 @@ import { Layout } from "@/layouts/MainLayout";
 import { PostListProvider } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 
-export default function Main(): JSX.Element {
+export default function MainPage(): JSX.Element {
 	const { userInfo } = useContext(UserContext);
 	const loggedIn = userInfo.token !== "";
 

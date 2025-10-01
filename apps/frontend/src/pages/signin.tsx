@@ -22,7 +22,7 @@ interface SignInFormValues {
 	password: string;
 }
 
-export default function SignIn(): JSX.Element {
+export default function SignInPage(): JSX.Element {
 	const navigate = useNavigate();
 	const { setUserInfo } = useContext(UserContext);
 	const form = useForm<SignInFormValues>({
