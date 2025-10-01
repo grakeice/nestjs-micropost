@@ -99,9 +99,11 @@ export function Header(): JSX.Element {
 									<Button
 										className={"cursor-pointer"}
 										variant={"ghost"}
-										onClick={logout}
+										asChild
 									>
-										ユーザー情報の編集
+										<Link to="/user">
+											ユーザー情報の編集
+										</Link>
 									</Button>
 									<Button
 										className={"cursor-pointer"}

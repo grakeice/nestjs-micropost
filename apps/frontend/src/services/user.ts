@@ -12,6 +12,14 @@ interface createUserArguments {
 	password: string;
 }
 
+interface updateUserInfoArguments {
+	userId: number;
+	token: string;
+	name: string;
+	email: string;
+	password: string;
+}
+
 export interface User {
 	readonly id: number;
 	name: string;
@@ -39,5 +47,23 @@ export async function createUser({ ...data }: createUserArguments) {
 		toast.success("ユーザー登録に成功しました");
 	} catch {
 		toast.error("ユーザー登録に失敗しました");
+	}
+}
+
+export async function updateUserInfo({
+	userId,
+	token,
+	...data
+}: updateUserInfoArguments) {
+	try {
+		const base = new URL("http://127.0.0.1:3000/user/[user_id]");
+		const url = new URL(String(userId), base);
+		url.searchParams.set("token", token);
+
+		const res = await axios.put(url.toString(), data);
+		console.log(res.status);
+		toast.success("ユーザー情報の更新に成功しました");
+	} catch {
+		toast.error("ユーザー情報の更新に失敗しました");
 	}
 }
