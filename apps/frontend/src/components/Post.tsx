@@ -91,7 +91,7 @@ export function Post({ ...props }: PostProps): JSX.Element {
 					</PopoverTrigger>
 					<PopoverContent>
 						<Alert
-							className={"border-none"}
+							className={"border-none p-0"}
 							variant={"destructive"}
 						>
 							<AlertTitle>削除しますか？</AlertTitle>
