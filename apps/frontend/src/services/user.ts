@@ -29,8 +29,10 @@ export interface User {
 	readonly updated_at?: Date;
 }
 
+const host = import.meta.env.VITE_API_HOST;
+
 export async function getUser({ userId, token }: getUserArguments) {
-	const base = new URL("http://127.0.0.1:3000/user/[user_id]");
+	const base = new URL(`${host}/user/[user_id]`);
 	const url = new URL(String(userId), base);
 	url.searchParams.set("token", token);
 
@@ -41,7 +43,7 @@ export async function getUser({ userId, token }: getUserArguments) {
 
 export async function createUser({ ...data }: createUserArguments) {
 	try {
-		const url = new URL("http://127.0.0.1:3000/user/");
+		const url = new URL(`${host}/user/`);
 		const res = await axios.post(url.toString(), data);
 		console.log(res.status);
 		toast.success("ユーザー登録に成功しました");
@@ -56,7 +58,7 @@ export async function updateUserInfo({
 	...data
 }: updateUserInfoArguments) {
 	try {
-		const base = new URL("http://127.0.0.1:3000/user/[user_id]");
+		const base = new URL(`${host}/user/[user_id]`);
 		const url = new URL(String(userId), base);
 		url.searchParams.set("token", token);
 

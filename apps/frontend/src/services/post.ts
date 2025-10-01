@@ -12,12 +12,14 @@ type ResultType = {
 	length: number;
 };
 
+const host = import.meta.env.VITE_API_HOST;
+
 export async function getList(
 	token: string,
 	start: number = 1,
 	query?: string,
 ) {
-	const url = new URL("http://127.0.0.1:3000/post");
+	const url = new URL(`${host}/post`);
 	url.searchParams.set("token", token);
 	url.searchParams.set("start", start.toString());
 	url.searchParams.set("records", "10");
@@ -40,7 +42,7 @@ export async function createPost({
 	message,
 }: CreatePostArguments) {
 	const data = { message };
-	const url = new URL("http://127.0.0.1:3000/post");
+	const url = new URL(`${host}/post`);
 	url.searchParams.set("user_id", user_id);
 	url.searchParams.set("token", token);
 
@@ -56,7 +58,7 @@ interface DeletePostArguments {
 }
 
 export async function deletePost({ token, messageId }: DeletePostArguments) {
-	const base = new URL("http://127.0.0.1:3000/post/[messageId]");
+	const base = new URL(`${host}/post/[messageId]`);
 	const url = new URL(String(messageId), base);
 	url.searchParams.set("token", token);
 

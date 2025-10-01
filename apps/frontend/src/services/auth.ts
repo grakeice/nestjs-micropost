@@ -1,8 +1,10 @@
 import axios from "axios";
 import { toast } from "sonner";
 
+const host = import.meta.env.VITE_API_HOST;
+
 export async function signInApi(userId: string, password: string) {
-	const url = new URL("http://127.0.0.1:3000/auth");
+	const url = new URL(`${host}/auth`);
 	url.searchParams.set("user_id", userId);
 	url.searchParams.set("password", password);
 
