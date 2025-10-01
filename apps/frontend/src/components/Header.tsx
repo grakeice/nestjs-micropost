@@ -68,9 +68,11 @@ export function Header(): JSX.Element {
 										<Avatar>
 											<AvatarImage />
 											<AvatarFallback>
-												{userName !== ""
-													? userName
-													: <User />}
+												{userName !== "" ? (
+													userName
+												) : (
+													<User />
+												)}
 											</AvatarFallback>
 										</Avatar>
 										<motion.div
