@@ -44,7 +44,7 @@ export function SideBar(): JSX.Element {
 			setUserName(user.name);
 			setUserEmail(user.email);
 		})();
-	});
+	}, [userInfo.id, userInfo.token]);
 
 	return (
 		<Flex direction={"column"} p={"4"} asChild>
