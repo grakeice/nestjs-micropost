@@ -3,6 +3,7 @@ import {
 	useEffect,
 	useState,
 	type ChangeEvent,
+	type KeyboardEvent,
 	type JSX,
 } from "react";
 
@@ -33,8 +34,8 @@ export function PostList(): JSX.Element {
 	const { userInfo } = useContext(UserContext);
 
 	const [page, setPage] = useState(1);
-
 	const [searchText, setSearchText] = useState("");
+	const [isComposing, setIsComposing] = useState(false);
 
 	const { getPostList, setSearchText: setQuery } = usePostList(
 		userInfo,
@@ -73,6 +74,10 @@ export function PostList(): JSX.Element {
 		setSearchText(e.target.value);
 	};
 
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter" && !isComposing) setQuery(searchText);
+	};
+
 	return (
 		<Flex
 			p={"4"}
@@ -82,18 +87,33 @@ export function PostList(): JSX.Element {
 			position={"relative"}
 			gap={"4"}
 		>
-			<div className={"h-[2rem] w-full flex-0"}>
+			<div
+				className={
+					"flex h-[2rem] w-full flex-0 flex-row items-center gap-2"
+				}
+			>
 				<TextField.Root
 					placeholder="ポストを検索"
 					className={"w-full"}
 					name={"search"}
 					value={searchText}
 					onChange={handleSearchFieldChange}
+					onCompositionStart={() => setIsComposing(true)}
+					onCompositionEnd={() => setIsComposing(false)}
+					onKeyDown={handleKeyDown}
 				>
 					<TextField.Slot>
 						<Search />
 					</TextField.Slot>
 				</TextField.Root>
+				<Button
+					className={"cursor-pointer"}
+					variant={"ghost"}
+					onClick={() => setQuery(searchText)}
+				>
+					<Search />
+					検索
+				</Button>
 			</div>
 			<div
 				className={
