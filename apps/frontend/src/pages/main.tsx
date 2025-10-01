@@ -3,7 +3,7 @@ import { useContext, type JSX } from "react";
 import { Navigate } from "react-router-dom";
 
 import { PostList } from "@/components/PostList";
-import { Layout } from "@/layouts/MainLayout";
+import { Layout } from "@/layouts/PostLayout";
 import { PostListProvider } from "@/providers/PostListProvider";
 import { UserContext } from "@/providers/UserProvider";
 

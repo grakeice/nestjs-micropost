@@ -11,7 +11,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { Layout } from "@/layouts/MainLayout";
 import { createUser } from "@/services/user";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -42,7 +42,7 @@ export default function SignUpPage() {
 	};
 
 	return (
-		<AuthLayout>
+		<Layout>
 			<div className="mx-auto flex max-w-md flex-col gap-6 rounded-lg bg-white p-8 shadow">
 				<Form {...form}>
 					<form
@@ -108,6 +108,6 @@ export default function SignUpPage() {
 					</form>
 				</Form>
 			</div>
-		</AuthLayout>
+		</Layout>
 	);
 }

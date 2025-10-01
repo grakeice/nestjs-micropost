@@ -13,7 +13,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { Layout } from "@/layouts/MainLayout";
 import { UserContext } from "@/providers/UserProvider";
 import { signInApi } from "@/services/auth";
 
@@ -42,7 +42,7 @@ export default function SignInPage(): JSX.Element {
 	};
 
 	return (
-		<AuthLayout>
+		<Layout>
 			<div className="mx-auto flex max-w-md flex-col gap-6 rounded-lg bg-white p-8 shadow">
 				<Form {...form}>
 					<form
@@ -87,6 +87,6 @@ export default function SignInPage(): JSX.Element {
 					</form>
 				</Form>
 			</div>
-		</AuthLayout>
+		</Layout>
 	);
 }
