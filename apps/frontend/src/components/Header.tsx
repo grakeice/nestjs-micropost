@@ -1,13 +1,17 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
 import { Container, Flex } from "@radix-ui/themes";
+import { ChevronRight } from "lucide-react";
+import { motion } from "motion/react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { UserContext } from "@/providers/UserProvider";
 import { getUser } from "@/services/user";
 
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 export function Header(): JSX.Element {
 	const navigate = useNavigate();
@@ -15,6 +19,7 @@ export function Header(): JSX.Element {
 	const { userInfo, setUserInfo } = useContext(UserContext);
 
 	const [userName, setUserName] = useState("");
+	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const logout = () => {
 		setUserInfo({ id: 0, token: "" });
@@ -50,19 +55,69 @@ export function Header(): JSX.Element {
 						</Link>
 					</div>
 					<div className="flex w-full flex-row items-center justify-end">
-						<div className="mr-4 py-2 text-center text-base">
-							{userName}
-						</div>
 						{userInfo.token ? (
-							<Button
-								onClick={logout}
-								variant={"ghost"}
-								className={"cursor-pointer"}
+							<Popover
+								open={isPopoverOpen}
+								onOpenChange={setIsPopoverOpen}
 							>
-								サインアウト
-							</Button>
+								<PopoverTrigger
+									className={"cursor-pointer"}
+									asChild
+								>
+									<Button variant={"ghost"}>
+										<Avatar>
+											<AvatarImage />
+											<AvatarFallback>
+												{userName !== ""
+													? userName
+													: "?"}
+											</AvatarFallback>
+										</Avatar>
+										<motion.div
+											animate={
+												isPopoverOpen
+													? {
+															transform:
+																"rotate(90deg)",
+														}
+													: {
+															transform:
+																"rotate(0deg)",
+														}
+											}
+											transition={{ duration: 0.1 }}
+										>
+											<ChevronRight />
+										</motion.div>
+									</Button>
+								</PopoverTrigger>
+								<PopoverContent
+									className={
+										"flex w-fit flex-col p-1 [&>*]:w-full [&>*]:justify-start"
+									}
+								>
+									<Button
+										className={"cursor-pointer"}
+										variant={"ghost"}
+										onClick={logout}
+									>
+										ユーザー情報の編集
+									</Button>
+									<Button
+										className={"cursor-pointer"}
+										variant={"ghost"}
+										onClick={logout}
+									>
+										サインアウト
+									</Button>
+								</PopoverContent>
+							</Popover>
 						) : (
-							<Button asChild variant={"ghost"}>
+							<Button
+								className={"cursor-pointer"}
+								variant={"ghost"}
+								asChild
+							>
 								<Link to="/signup">サインアップ</Link>
 							</Button>
 						)}
