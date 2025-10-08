@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -14,7 +15,6 @@ import { Input } from "@/components/ui/input";
 import { Layout } from "@/layouts/MainLayout";
 import { createUser } from "@/services/user";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const formSchema = z.object({
 	username: z.string().min(2).max(50),
 	email: z.email(),
@@ -23,6 +23,7 @@ const formSchema = z.object({
 
 export default function SignUpPage() {
 	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
 		defaultValues: {
 			username: "",
 			email: "",

@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState, type JSX } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Flex } from "@radix-ui/themes";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { usePostList } from "@/hooks/usePostList";
 import { PostListContext } from "@/providers/PostListProvider";
@@ -9,12 +12,16 @@ import { createPost } from "@/services/post";
 import { getUser } from "@/services/user";
 
 import { Button } from "./ui/button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Textarea } from "./ui/textarea";
+
+const formSchema = z.object({
+	message: z.string().trim().min(1, { error: "内容を入力してください" }),
+});
 
 export function SideBar(): JSX.Element {
 	const [userName, setUserName] = useState("");
 	const [userEmail, setUserEmail] = useState("");
-	const [message, setMessage] = useState("");
 
 	const { userInfo } = useContext(UserContext);
 	const { setPostList, setPostListLength } = useContext(PostListContext);
@@ -25,13 +32,20 @@ export function SideBar(): JSX.Element {
 		setPostListLength,
 	);
 
-	const handleSendButtonClick = async () => {
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			message: "",
+		},
+	});
+
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		await createPost({
 			user_id: String(userInfo.id),
 			token: userInfo.token,
-			message,
+			message: values.message,
 		});
-		setMessage("");
+		form.setValue("message", "");
 		await getPostList();
 	};
 
@@ -52,16 +66,28 @@ export function SideBar(): JSX.Element {
 				<div className="my-1 text-left">{userName}</div>
 				<div className="my-1 text-left">{userEmail}</div>
 				<div className="my-1 text-left">
-					<Textarea
-						className={"h-30"}
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-					></Textarea>
-				</div>
-				<div className="my-1 text-right">
-					<Button type="button" onClick={handleSendButtonClick}>
-						送信
-					</Button>
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)}>
+							<FormField
+								control={form.control}
+								name={"message"}
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<Textarea
+												className={"h-30"}
+												{...field}
+											></Textarea>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<div className="my-1 text-right">
+								<Button type="submit">送信</Button>
+							</div>
+						</form>
+					</Form>
 				</div>
 			</aside>
 		</Flex>
