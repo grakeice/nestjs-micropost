@@ -1,6 +1,8 @@
 import { useContext, useState, type ComponentProps, type JSX } from "react";
 
 import clsx from "clsx";
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
 import { Trash } from "lucide-react";
 
 import type { Post } from "@/providers/PostListProvider";
@@ -16,6 +18,8 @@ interface PostProps extends ComponentProps<"div"> {
 	getPostList: (page?: number) => Promise<void>;
 }
 
+dayjs.locale("ja");
+
 export function Post({ ...props }: PostProps): JSX.Element {
 	const { post, getPostList, ..._props } = props;
 
@@ -24,17 +28,7 @@ export function Post({ ...props }: PostProps): JSX.Element {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const formatDate = (dateObj: Date) => {
-		const dateOption = {
-			weekday: "long",
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-			hour: "2-digit",
-			minute: "2-digit",
-			second: "2-digit",
-		} satisfies Intl.DateTimeFormatOptions;
-
-		return dateObj.toLocaleDateString("ja", dateOption);
+		return dayjs(dateObj).format("YYYY年MM月DD日(ddd) HH:mm:ss");
 	};
 
 	const handleCancelDeleteButtonClick = () => setIsPopoverOpen(false);
