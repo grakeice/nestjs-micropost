@@ -7,7 +7,7 @@ import {
 	type JSX,
 } from "react";
 
-import { Flex, Separator, TextField } from "@radix-ui/themes";
+import { Flex, Separator } from "@radix-ui/themes";
 import clsx from "clsx";
 import { RefreshCcw, Search } from "lucide-react";
 import { useDebounce } from "react-use";
@@ -19,6 +19,12 @@ import { UserContext } from "@/providers/UserProvider";
 
 import { Post } from "./Post";
 import { Button } from "./ui/button";
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+	InputGroupInput,
+} from "./ui/input-group";
 import {
 	Pagination,
 	PaginationContent,
@@ -92,28 +98,28 @@ export function PostList(): JSX.Element {
 					"flex h-[2rem] w-full flex-0 flex-row items-center gap-2"
 				}
 			>
-				<TextField.Root
-					placeholder="ポストを検索"
-					className={"w-full"}
-					name={"search"}
-					value={searchText}
-					onChange={handleSearchFieldChange}
-					onCompositionStart={() => setIsComposing(true)}
-					onCompositionEnd={() => setIsComposing(false)}
-					onKeyDown={handleKeyDown}
-				>
-					<TextField.Slot>
+				<InputGroup>
+					<InputGroupInput
+						placeholder={"ポストを検索"}
+						name={"search"}
+						value={searchText}
+						onChange={handleSearchFieldChange}
+						onCompositionStart={() => setIsComposing(true)}
+						onCompositionEnd={() => setIsComposing(false)}
+						onKeyDown={handleKeyDown}
+					/>
+					<InputGroupAddon>
 						<Search />
-					</TextField.Slot>
-				</TextField.Root>
-				<Button
-					className={"cursor-pointer"}
-					variant={"ghost"}
-					onClick={() => setQuery(searchText)}
-				>
-					<Search />
-					検索
-				</Button>
+					</InputGroupAddon>
+					<InputGroupAddon align={"inline-end"}>
+						<InputGroupButton
+							className={"cursor-pointer"}
+							onClick={() => setQuery(searchText)}
+						>
+							検索
+						</InputGroupButton>
+					</InputGroupAddon>
+				</InputGroup>
 			</div>
 			<div
 				className={
