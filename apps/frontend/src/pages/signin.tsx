@@ -1,7 +1,9 @@
 import { useContext, type JSX } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,24 +19,25 @@ import { Layout } from "@/layouts/MainLayout";
 import { UserContext } from "@/providers/UserProvider";
 import { signInApi } from "@/services/auth";
 
-interface SignInFormValues {
-	userId: string;
-	password: string;
-}
+const formSchema = z.object({
+	email: z.email(),
+	password: z.string(),
+});
 
 export default function SignInPage(): JSX.Element {
 	const navigate = useNavigate();
 	const { setUserInfo } = useContext(UserContext);
-	const form = useForm<SignInFormValues>({
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
 		defaultValues: {
-			userId: "",
+			email: "",
 			password: "",
 		},
 		mode: "onBlur",
 	});
 
-	const onSubmit = async (values: SignInFormValues) => {
-		const ret = await signInApi(values.userId, values.password);
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		const ret = await signInApi(values.email, values.password);
 		if (ret?.token) {
 			setUserInfo({ id: ret.user_id, token: ret.token });
 			navigate("/main");
@@ -51,14 +54,14 @@ export default function SignInPage(): JSX.Element {
 					>
 						<FormField
 							control={form.control}
-							name="userId"
+							name="email"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>ユーザー名</FormLabel>
+									<FormLabel>Email</FormLabel>
 									<FormControl>
 										<Input
 											type="text"
-											placeholder="ID"
+											placeholder="Email"
 											{...field}
 										/>
 									</FormControl>

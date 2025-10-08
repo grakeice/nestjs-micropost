@@ -17,7 +17,7 @@ export class AuthService {
 		private authRepository: Repository<Auth>,
 	) {}
 
-	async getAuth(name: string, password: string) {
+	async getAuth(email: string, password: string) {
 		if (!password) {
 			throw new UnauthorizedException();
 		}
@@ -25,7 +25,7 @@ export class AuthService {
 		const hash = createHash("md5").update(password).digest("hex");
 		const user = await this.userRepository.findOne({
 			where: {
-				name: Equal(name),
+				email: Equal(email),
 				hash: Equal(hash),
 			},
 		});

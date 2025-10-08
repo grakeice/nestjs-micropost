@@ -3,9 +3,9 @@ import { toast } from "sonner";
 
 const host = import.meta.env.VITE_API_HOST;
 
-export async function signInApi(userId: string, password: string) {
+export async function signInApi(email: string, password: string) {
 	const url = new URL(`${host}/auth`);
-	url.searchParams.set("user_id", userId);
+	url.searchParams.set("email", email);
 	url.searchParams.set("password", password);
 
 	try {

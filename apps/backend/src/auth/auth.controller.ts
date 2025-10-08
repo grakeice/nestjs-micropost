@@ -10,12 +10,12 @@ export class AuthController {
 
 	@Get()
 	async getAuth(
-		@Query("user_id") name: string,
+		@Query("email") email: string,
 		@Query("password") password: string,
 		@Res() res: Response,
 	) {
-		console.log(`${name} has logged in`);
-		const result = await this.authService.getAuth(name, password);
+		console.log(`${email} has logged in`);
+		const result = await this.authService.getAuth(email, password);
 		res.cookie("user_id", result.user_id, { httpOnly: false });
 		res.cookie("token", result.token, { httpOnly: false });
 		return res.json(result);
