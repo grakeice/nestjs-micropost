@@ -63,7 +63,6 @@ export async function updateUserInfo({
 	try {
 		const base = new URL(`${host}/user/[user_id]`);
 		const url = new URL(String(userId), base);
-		// url.searchParams.set("token", token);
 
 		const res = await axios.put(url.toString(), data, {
 			headers: { Authorization: `Bearer ${token}` },

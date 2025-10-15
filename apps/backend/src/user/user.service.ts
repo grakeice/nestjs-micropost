@@ -2,6 +2,7 @@ import {
 	BadRequestException,
 	Injectable,
 	NotFoundException,
+	ForbiddenException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
@@ -71,7 +72,10 @@ export class UserService {
 	 * ユーザー情報を更新する
 	 * @param param0 ユーザー情報
 	 */
-	async updateUserInfo({ id, name, email, password }: EditUserDto) {
+	async updateUserInfo(
+		{ id, name, email, password }: EditUserDto,
+		requesterId?: number,
+	) {
 		// const now = new Date();
 		// const auth = await this.authRepository.findOne({
 		// 	where: {
@@ -89,6 +93,11 @@ export class UserService {
 		});
 
 		if (!user) throw new NotFoundException();
+
+		// requester must be the user themself (or in future, an admin)
+		if (typeof requesterId === "number" && requesterId !== id) {
+			throw new ForbiddenException();
+		}
 
 		const record = new EditUserDto({ id, name, email, password });
 
