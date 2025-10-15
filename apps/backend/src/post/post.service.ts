@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 import { type Repository } from "typeorm";
 
-import { Auth } from "@/entities/auth.entity";
 import { MicroPost } from "@/entities/microposts.entity";
 
 @Injectable()
@@ -11,21 +10,9 @@ export class PostService {
 	constructor(
 		@InjectRepository(MicroPost)
 		private microPostsRepository: Repository<MicroPost>,
-		@InjectRepository(Auth)
-		private authRepository: Repository<Auth>,
 	) {}
 
 	async createPost(userId: number, message: string) {
-		// const now = new Date();
-		// const auth = await this.authRepository.findOne({
-		// 	where: {
-		// 		token: Equal(token),
-		// 		expire_at: MoreThan(now),
-		// 	},
-		// });
-
-		// if (!auth) throw new ForbiddenException();
-
 		const record = {
 			user_id: userId,
 			content: message,
@@ -75,16 +62,6 @@ export class PostService {
 	}
 
 	async deletePost(messageId: number) {
-		// const now = new Date();
-		// const auth = await this.authRepository.findOne({
-		// 	where: {
-		// 		token: Equal(token),
-		// 		expire_at: MoreThan(now),
-		// 	},
-		// });
-
-		// if (!auth) throw new ForbiddenException();
-
 		await this.microPostsRepository.delete(messageId);
 	}
 }

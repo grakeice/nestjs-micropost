@@ -20,7 +20,6 @@ export async function getList(
 	query?: string,
 ) {
 	const url = new URL(`${host}/post`);
-	// url.searchParams.set("token", token);
 	url.searchParams.set("start", start.toString());
 	url.searchParams.set("records", "10");
 	if (query) url.searchParams.set("q", query);
@@ -43,9 +42,8 @@ export async function createPost({
 	token,
 	message,
 }: CreatePostArguments) {
-	const data = { message };
+	const data = { user_id, message };
 	const url = new URL(`${host}/post`);
-	url.searchParams.set("user_id", user_id);
 
 	const res = await axios.post(url.toString(), data, {
 		headers: { Authorization: `Bearer ${token}` },

@@ -22,6 +22,7 @@ export class PostController {
 		@Body("user_id") userId: number,
 		@Body("message") message: string,
 	) {
+		console.log(userId, message);
 		return await this.postService.createPost(userId, message);
 	}
 
