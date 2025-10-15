@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+	Injectable,
+	ForbiddenException,
+	NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { type Repository } from "typeorm";
@@ -61,7 +65,17 @@ export class PostService {
 		return { posts: records, length };
 	}
 
-	async deletePost(messageId: number) {
+	async deletePost(messageId: number, requesterId: number) {
+		const post = await this.microPostsRepository.findOne({
+			where: { id: messageId },
+		});
+
+		if (!post) throw new NotFoundException();
+
+		if (post.user_id !== requesterId) {
+			throw new ForbiddenException();
+		}
+
 		await this.microPostsRepository.delete(messageId);
 	}
 }

@@ -9,10 +9,6 @@ export class AuthController {
 
 	@Post()
 	async getAuth(@Body() authDto: AuthDto) {
-		// const result = await this.authService.getAuth(email, password);
-		// res.cookie("user_id", result.user_id, { httpOnly: false });
-		// res.cookie("token", result.token, { httpOnly: false });
-		// return res.json(result);
 		return await this.authService.getAuth(authDto);
 	}
 }

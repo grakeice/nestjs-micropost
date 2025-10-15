@@ -6,6 +6,8 @@ import {
 	Post,
 	Put,
 	UseGuards,
+	Request,
+	ForbiddenException,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 
@@ -37,12 +39,19 @@ export class UserController {
 		@Body("name") name: string,
 		@Body("email") email: string,
 		@Body("password") password: string,
+		@Request() req: { user?: { id?: number } },
 	) {
-		await this.userService.updateUserInfo({
-			id,
-			name,
-			email,
-			password,
-		});
+		const requesterId = req.user?.id;
+		if (!requesterId) throw new ForbiddenException();
+
+		await this.userService.updateUserInfo(
+			{
+				id,
+				name,
+				email,
+				password,
+			},
+			requesterId,
+		);
 	}
 }

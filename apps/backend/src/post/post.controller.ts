@@ -7,6 +7,8 @@ import {
 	Post,
 	Query,
 	UseGuards,
+	Request,
+	ForbiddenException,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 
@@ -38,7 +40,13 @@ export class PostController {
 
 	@Delete(":id")
 	@UseGuards(AuthGuard("jwt"))
-	async deletePost(@Param("id") id: number) {
-		await this.postService.deletePost(id);
+	async deletePost(
+		@Param("id") id: number,
+		@Request()
+		req: { user?: { id?: number } },
+	) {
+		const requesterId = req.user?.id;
+		if (!requesterId) throw new ForbiddenException();
+		await this.postService.deletePost(id, requesterId);
 	}
 }
