@@ -1,4 +1,10 @@
-import { useContext, useEffect, useState, type JSX } from "react";
+import {
+	useContext,
+	useEffect,
+	useEffectEvent,
+	useState,
+	type JSX,
+} from "react";
 
 import { Container, Flex } from "@radix-ui/themes";
 import { ChevronRight, User } from "lucide-react";
@@ -29,16 +35,17 @@ export function Header(): JSX.Element {
 		toast("サインアウトしました");
 	};
 
+	const fetchUserName = useEffectEvent(async () => {
+		const user = await getUser({
+			userId: userInfo.id,
+			token: userInfo.token,
+		});
+		setUserName(user?.name ?? "");
+	});
+
 	useEffect(() => {
-		if (userName)
-			(async () => {
-				const user = await getUser({
-					userId: userInfo.id,
-					token: userInfo.token,
-				});
-				setUserName(user.name);
-			})();
-	}, [userInfo.id, userInfo.token, userName]);
+		fetchUserName();
+	});
 
 	return (
 		<Container asChild className={"h-[4rem]"}>

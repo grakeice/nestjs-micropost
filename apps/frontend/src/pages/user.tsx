@@ -54,8 +54,8 @@ export default function UserPage(): JSX.Element {
 				userId: userInfo.id,
 				token: userInfo.token,
 			});
-			form.setValue("name", userData.name);
-			form.setValue("email", userData.email);
+			form.setValue("name", userData?.name ?? "");
+			form.setValue("email", userData?.email ?? "");
 		})();
 	});
 

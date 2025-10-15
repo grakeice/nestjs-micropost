@@ -1,4 +1,11 @@
-import { useContext, useEffect, useState, type JSX } from "react";
+import {
+	useContext,
+	useEffect,
+	useState,
+	type Dispatch,
+	type JSX,
+	type SetStateAction,
+} from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Flex } from "@radix-ui/themes";
@@ -19,7 +26,12 @@ const formSchema = z.object({
 	message: z.string().trim().min(1, { error: "内容を入力してください" }),
 });
 
-export function SideBar(): JSX.Element {
+interface SideBarProps {
+	page: number;
+	setPage: Dispatch<SetStateAction<number>>;
+}
+
+export function SideBar({ ...props }: SideBarProps): JSX.Element {
 	const [userName, setUserName] = useState("");
 	const [userEmail, setUserEmail] = useState("");
 
@@ -31,6 +43,8 @@ export function SideBar(): JSX.Element {
 		setPostList,
 		setPostListLength,
 	);
+
+	const { setPage } = props;
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -46,6 +60,7 @@ export function SideBar(): JSX.Element {
 			message: values.message,
 		});
 		form.setValue("message", "");
+		setPage(1);
 		await getPostList();
 	};
 
@@ -55,8 +70,8 @@ export function SideBar(): JSX.Element {
 				userId: userInfo.id,
 				token: userInfo.token,
 			});
-			setUserName(user.name);
-			setUserEmail(user.email);
+			setUserName(user?.name ?? "");
+			setUserEmail(user?.email ?? "");
 		})();
 	}, [userInfo.id, userInfo.token]);
 

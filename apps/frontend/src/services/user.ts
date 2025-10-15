@@ -34,6 +34,7 @@ const host = import.meta.env.VITE_API_HOST;
 export async function getUser({ userId, token }: getUserArguments) {
 	const base = new URL(`${host}/user/[user_id]`);
 	const url = new URL(String(userId), base);
+	if (userId === 0) return;
 	// url.searchParams.set("token", token);
 
 	const res = await axios.get<User>(url.toString(), {

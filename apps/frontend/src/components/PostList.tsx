@@ -5,6 +5,8 @@ import {
 	type ChangeEvent,
 	type KeyboardEvent,
 	type JSX,
+	type Dispatch,
+	type SetStateAction,
 } from "react";
 
 import { Flex, Separator } from "@radix-ui/themes";
@@ -34,12 +36,17 @@ import {
 	PaginationNext,
 } from "./ui/pagination";
 
-export function PostList(): JSX.Element {
+interface PostListProps {
+	page: number;
+	setPage: Dispatch<SetStateAction<number>>;
+}
+
+export function PostList({ ...props }: PostListProps): JSX.Element {
 	const { postList, setPostList, postListLength, setPostListLength } =
 		useContext(PostListContext);
 	const { userInfo } = useContext(UserContext);
 
-	const [page, setPage] = useState(1);
+	const { page, setPage } = props;
 	const [searchText, setSearchText] = useState("");
 	const [isComposing, setIsComposing] = useState(false);
 
