@@ -20,12 +20,13 @@ export async function getList(
 	query?: string,
 ) {
 	const url = new URL(`${host}/post`);
-	url.searchParams.set("token", token);
 	url.searchParams.set("start", start.toString());
 	url.searchParams.set("records", "10");
 	if (query) url.searchParams.set("q", query);
 
-	const res = await axios.get<ResultType>(url.toString());
+	const res = await axios.get<ResultType>(url.toString(), {
+		headers: { Authorization: `Bearer ${token}` },
+	});
 
 	return res.data;
 }
@@ -41,12 +42,12 @@ export async function createPost({
 	token,
 	message,
 }: CreatePostArguments) {
-	const data = { message };
+	const data = { user_id, message };
 	const url = new URL(`${host}/post`);
-	url.searchParams.set("user_id", user_id);
-	url.searchParams.set("token", token);
 
-	const res = await axios.post(url.toString(), data);
+	const res = await axios.post(url.toString(), data, {
+		headers: { Authorization: `Bearer ${token}` },
+	});
 	console.log(res);
 
 	return res;
@@ -60,10 +61,11 @@ interface DeletePostArguments {
 export async function deletePost({ token, messageId }: DeletePostArguments) {
 	const base = new URL(`${host}/post/[messageId]`);
 	const url = new URL(String(messageId), base);
-	url.searchParams.set("token", token);
 
 	try {
-		const res = await axios.delete(url.toString());
+		const res = await axios.delete(url.toString(), {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 		console.log(res);
 		toast("ポストを削除しました");
 		return res;

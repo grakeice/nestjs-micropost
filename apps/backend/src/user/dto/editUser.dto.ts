@@ -8,9 +8,6 @@ import {
 
 export class EditUserDto {
 	@IsNotEmpty()
-	token: string;
-
-	@IsNotEmpty()
 	@IsNumberString()
 	id: number;
 
@@ -26,19 +23,16 @@ export class EditUserDto {
 	password?: string;
 
 	constructor({
-		token,
 		id,
 		name,
 		email,
 		password,
 	}: {
-		token: string;
 		id: number;
 		name?: string;
 		email?: string;
 		password?: string;
 	}) {
-		this.token = token;
 		this.id = id;
 		this.name = name;
 		this.email = email;

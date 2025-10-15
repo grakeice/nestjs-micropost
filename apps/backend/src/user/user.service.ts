@@ -1,15 +1,13 @@
 import {
 	BadRequestException,
-	ForbiddenException,
 	Injectable,
 	NotFoundException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { createHash } from "node:crypto";
-
+import * as bcrypt from "bcrypt";
 import { validate } from "class-validator";
-import { Equal, MoreThan, type Repository } from "typeorm";
+import { Equal, type Repository } from "typeorm";
 
 import { Auth } from "@/entities/auth.entity";
 import { User } from "@/entities/user.entity";
@@ -28,20 +26,19 @@ export class UserService {
 
 	/**
 	 * ユーザー情報を取得する
-	 * @param token 認証情報
 	 * @param id ユーザーID
 	 * @returns ユーザー情報
 	 */
-	async getUser(token: string, id: number) {
-		const now = new Date();
-		const auth = await this.authRepository.findOne({
-			where: {
-				token: Equal(token),
-				expire_at: MoreThan(now),
-			},
-		});
+	async getUser(id: number) {
+		// const now = new Date();
+		// const auth = await this.authRepository.findOne({
+		// 	where: {
+		// 		token: Equal(token),
+		// 		expire_at: MoreThan(now),
+		// 	},
+		// });
 
-		if (!auth) throw new ForbiddenException();
+		// if (!auth) throw new ForbiddenException();
 
 		const user = await this.userRepository.findOne({
 			where: {
@@ -59,7 +56,8 @@ export class UserService {
 	 * @param param0 ユーザー情報
 	 */
 	async createUser({ name, email, password }: CreateUserDto) {
-		const hash = createHash("md5").update(password).digest("hex");
+		// const hash = createHash("md5").update(password).digest("hex");
+		const hash = await bcrypt.hash(password, 10);
 		const record = new CreateUserDto({ name, email, password });
 		const errors = await validate(record);
 		if (errors.length > 0) {
@@ -73,16 +71,16 @@ export class UserService {
 	 * ユーザー情報を更新する
 	 * @param param0 ユーザー情報
 	 */
-	async updateUserInfo({ token, id, name, email, password }: EditUserDto) {
-		const now = new Date();
-		const auth = await this.authRepository.findOne({
-			where: {
-				token: Equal(token),
-				expire_at: MoreThan(now),
-			},
-		});
+	async updateUserInfo({ id, name, email, password }: EditUserDto) {
+		// const now = new Date();
+		// const auth = await this.authRepository.findOne({
+		// 	where: {
+		// 		token: Equal(token),
+		// 		expire_at: MoreThan(now),
+		// 	},
+		// });
 
-		if (!auth) throw new ForbiddenException();
+		// if (!auth) throw new ForbiddenException();
 
 		const user = await this.userRepository.findOne({
 			where: {
@@ -92,7 +90,7 @@ export class UserService {
 
 		if (!user) throw new NotFoundException();
 
-		const record = new EditUserDto({ token, id, name, email, password });
+		const record = new EditUserDto({ id, name, email, password });
 
 		const errors = await validate(record);
 		if (errors.length > 0) {
@@ -105,7 +103,7 @@ export class UserService {
 					email,
 					// パスワード更新があればパスワードをハッシュ化してからリポジトリに格納
 					hash: password
-						? createHash("md5").update(password).digest("hex")
+						? await bcrypt.hash(password, 10)
 						: undefined,
 				},
 			);

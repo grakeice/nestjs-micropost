@@ -1,9 +1,8 @@
-import { ForbiddenException, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { Equal, MoreThan, type Repository } from "typeorm";
+import { type Repository } from "typeorm";
 
-import { Auth } from "@/entities/auth.entity";
 import { MicroPost } from "@/entities/microposts.entity";
 
 @Injectable()
@@ -11,45 +10,17 @@ export class PostService {
 	constructor(
 		@InjectRepository(MicroPost)
 		private microPostsRepository: Repository<MicroPost>,
-		@InjectRepository(Auth)
-		private authRepository: Repository<Auth>,
 	) {}
 
-	async createPost(message: string, token: string) {
-		const now = new Date();
-		const auth = await this.authRepository.findOne({
-			where: {
-				token: Equal(token),
-				expire_at: MoreThan(now),
-			},
-		});
-
-		if (!auth) throw new ForbiddenException();
-
+	async createPost(userId: number, message: string) {
 		const record = {
-			user_id: auth.user_id,
+			user_id: userId,
 			content: message,
 		};
 		return await this.microPostsRepository.save(record);
 	}
 
-	async getList(
-		token: string,
-		start: number = 0,
-		nr_records: number = 1,
-		query?: string,
-	) {
-		// console.log(query);
-		const now = new Date();
-		const auth = await this.authRepository.findOne({
-			where: {
-				token: Equal(token),
-				expire_at: MoreThan(now),
-			},
-		});
-
-		if (!auth) throw new ForbiddenException();
-
+	async getList(start: number = 0, nr_records: number = 1, query?: string) {
 		const qb = this.microPostsRepository
 			.createQueryBuilder("micro_post")
 			.leftJoinAndSelect("user", "user", "user.id=micro_post.user_id")
@@ -90,17 +61,7 @@ export class PostService {
 		return { posts: records, length };
 	}
 
-	async deletePost(token: string, messageId: number) {
-		const now = new Date();
-		const auth = await this.authRepository.findOne({
-			where: {
-				token: Equal(token),
-				expire_at: MoreThan(now),
-			},
-		});
-
-		if (!auth) throw new ForbiddenException();
-
+	async deletePost(messageId: number) {
 		await this.microPostsRepository.delete(messageId);
 	}
 }

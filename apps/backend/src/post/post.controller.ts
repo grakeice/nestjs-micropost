@@ -6,7 +6,9 @@ import {
 	Param,
 	Post,
 	Query,
+	UseGuards,
 } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 
 import { PostService } from "./post.service";
 
@@ -15,25 +17,28 @@ export class PostController {
 	constructor(private readonly postService: PostService) {}
 
 	@Post()
+	@UseGuards(AuthGuard("jwt"))
 	async createPost(
+		@Body("user_id") userId: number,
 		@Body("message") message: string,
-		@Query("token") token: string,
 	) {
-		return await this.postService.createPost(message, token);
+		console.log(userId, message);
+		return await this.postService.createPost(userId, message);
 	}
 
 	@Get()
+	@UseGuards(AuthGuard("jwt"))
 	async getList(
-		@Query("token") token: string,
 		@Query("start") start: number,
 		@Query("records") records: number,
 		@Query("q") query?: string,
 	) {
-		return await this.postService.getList(token, start, records, query);
+		return await this.postService.getList(start, records, query);
 	}
 
 	@Delete(":id")
-	async deletePost(@Param("id") id: number, @Query("token") token: string) {
-		await this.postService.deletePost(token, id);
+	@UseGuards(AuthGuard("jwt"))
+	async deletePost(@Param("id") id: number) {
+		await this.postService.deletePost(id);
 	}
 }

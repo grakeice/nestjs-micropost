@@ -34,9 +34,11 @@ const host = import.meta.env.VITE_API_HOST;
 export async function getUser({ userId, token }: getUserArguments) {
 	const base = new URL(`${host}/user/[user_id]`);
 	const url = new URL(String(userId), base);
-	url.searchParams.set("token", token);
+	// url.searchParams.set("token", token);
 
-	const res = await axios.get<User>(url.toString());
+	const res = await axios.get<User>(url.toString(), {
+		headers: { Authorization: `Bearer ${token}` },
+	});
 
 	return res.data;
 }
@@ -60,9 +62,11 @@ export async function updateUserInfo({
 	try {
 		const base = new URL(`${host}/user/[user_id]`);
 		const url = new URL(String(userId), base);
-		url.searchParams.set("token", token);
+		// url.searchParams.set("token", token);
 
-		const res = await axios.put(url.toString(), data);
+		const res = await axios.put(url.toString(), data, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 		console.log(res.status);
 		toast.success("ユーザー情報の更新に成功しました");
 	} catch {

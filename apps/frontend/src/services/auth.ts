@@ -3,14 +3,13 @@ import { toast } from "sonner";
 
 const host = import.meta.env.VITE_API_HOST;
 
-export async function signInApi(userId: string, password: string) {
+export async function signInApi(email: string, password: string) {
 	const url = new URL(`${host}/auth`);
-	url.searchParams.set("user_id", userId);
-	url.searchParams.set("password", password);
 
 	try {
-		const res = await axios.get<{ token: string; user_id: number }>(
+		const res = await axios.post<{ token: string; user_id: number }>(
 			url.toString(),
+			{ email, password },
 		);
 
 		const { user_id, token } = res.data;

@@ -1,68 +1,39 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
 
-import { createHash } from "node:crypto";
-
+import * as bcrypt from "bcrypt";
 import { Equal, type Repository } from "typeorm";
 
-import { Auth } from "@/entities/auth.entity";
 import { User } from "@/entities/user.entity";
+import type { JwtPayload } from "@/types/jwtPayload";
+
+import type { AuthDto } from "./dto/auth.dto";
 
 @Injectable()
 export class AuthService {
 	constructor(
 		@InjectRepository(User)
 		private userRepository: Repository<User>,
-		@InjectRepository(Auth)
-		private authRepository: Repository<Auth>,
+		private jwtService: JwtService,
 	) {}
-
-	async getAuth(name: string, password: string) {
-		if (!password) {
-			throw new UnauthorizedException();
-		}
-
-		const hash = createHash("md5").update(password).digest("hex");
+	async getAuth(
+		authDto: AuthDto,
+	): Promise<{ token: string; user_id: number }> {
+		const { email, password } = authDto;
 		const user = await this.userRepository.findOne({
-			where: {
-				name: Equal(name),
-				hash: Equal(hash),
-			},
+			where: { email: Equal(email) },
 		});
 
-		if (!user) {
-			throw new UnauthorizedException();
-		}
-
-		const ret = {
-			token: "",
-			user_id: user.id,
-		};
-
-		const expire = new Date();
-		expire.setDate(expire.getDate() + 1);
-
-		const auth = await this.authRepository.findOne({
-			where: {
-				user_id: Equal(user.id),
-			},
-		});
-
-		if (auth) {
-			auth.expire_at = expire;
-			await this.authRepository.save(auth);
-			ret.token = auth.token;
-		} else {
-			const token = crypto.randomUUID();
-			const record = {
-				user_id: user.id,
-				token: token,
-				expire_at: expire.toISOString(),
+		if (user && (await bcrypt.compare(password, user.hash))) {
+			const payload: JwtPayload = {
+				sub: user.email,
+				username: user.name,
 			};
-			await this.authRepository.save(record);
-			ret.token = token;
+			const token = this.jwtService.sign(payload);
+			return { token, user_id: user.id };
 		}
 
-		return ret;
+		throw new UnauthorizedException();
 	}
 }
