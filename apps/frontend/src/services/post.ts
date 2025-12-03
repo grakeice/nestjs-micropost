@@ -32,6 +32,7 @@ export async function getList(
 		return res.data;
 	} catch {
 		toast.error("ポストの取得に失敗しました");
+		return { posts: [], length: 0 };
 	}
 }
 
