@@ -48,7 +48,7 @@ export function Header(): JSX.Element {
 	});
 
 	return (
-		<Container asChild className={"h-[4rem]"}>
+		<Container asChild className={"h-16"}>
 			<header>
 				<Flex
 					direction={"row"}
@@ -102,7 +102,7 @@ export function Header(): JSX.Element {
 								</PopoverTrigger>
 								<PopoverContent
 									className={
-										"flex w-fit flex-col p-1 [&>*]:w-full [&>*]:justify-start"
+										"flex w-fit flex-col p-1 *:w-full *:justify-start"
 									}
 								>
 									<Button

@@ -77,6 +77,7 @@ export function PostList({ ...props }: PostListProps): JSX.Element {
 
 	useDebounce(
 		() => {
+			setPage(1);
 			setQuery(searchText);
 		},
 		1000,
@@ -88,7 +89,10 @@ export function PostList({ ...props }: PostListProps): JSX.Element {
 	};
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter" && !isComposing) setQuery(searchText);
+		if (e.key === "Enter" && !isComposing) {
+			setPage(1);
+			setQuery(searchText);
+		}
 	};
 
 	return (
@@ -101,9 +105,7 @@ export function PostList({ ...props }: PostListProps): JSX.Element {
 			gap={"4"}
 		>
 			<div
-				className={
-					"flex h-[2rem] w-full flex-0 flex-row items-center gap-2"
-				}
+				className={"flex h-8 w-full flex-0 flex-row items-center gap-2"}
 			>
 				<InputGroup>
 					<InputGroupInput
