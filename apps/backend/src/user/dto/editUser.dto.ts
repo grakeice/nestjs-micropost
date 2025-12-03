@@ -1,4 +1,5 @@
 import {
+	IsEmail,
 	IsNotEmpty,
 	IsNumberString,
 	IsString,
@@ -16,7 +17,7 @@ export class EditUserDto {
 	@MaxLength(50)
 	name?: string;
 
-	@IsString()
+	@IsEmail()
 	email?: string;
 
 	@IsString()
