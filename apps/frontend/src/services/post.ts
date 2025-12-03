@@ -24,11 +24,15 @@ export async function getList(
 	url.searchParams.set("records", "10");
 	if (query) url.searchParams.set("q", query);
 
-	const res = await axios.get<ResultType>(url.toString(), {
-		headers: { Authorization: `Bearer ${token}` },
-	});
+	try {
+		const res = await axios.get<ResultType>(url.toString(), {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 
-	return res.data;
+		return res.data;
+	} catch {
+		toast.error("ポストの取得に失敗しました");
+	}
 }
 
 interface CreatePostArguments {
@@ -45,12 +49,15 @@ export async function createPost({
 	const data = { user_id, message };
 	const url = new URL(`${host}/post`);
 
-	const res = await axios.post(url.toString(), data, {
-		headers: { Authorization: `Bearer ${token}` },
-	});
-	console.log(res);
-
-	return res;
+	try {
+		const res = await axios.post(url.toString(), data, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		console.log(res);
+		return res;
+	} catch {
+		toast.error("ポストの投稿に失敗しました。");
+	}
 }
 
 interface DeletePostArguments {
