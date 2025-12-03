@@ -25,13 +25,14 @@ export interface User {
 	name: string;
 	hash: string;
 	email: string;
-	readonly created_at?: Date;
-	readonly updated_at?: Date;
+	readonly createdAt?: Date;
+	readonly updatedAt?: Date;
 }
 
 const host = import.meta.env.VITE_API_HOST;
 
 export async function getUser({ userId, token }: getUserArguments) {
+	console.log(userId);
 	const base = new URL(`${host}/user/[user_id]`);
 	const url = new URL(String(userId), base);
 	if (userId === 0) return;

@@ -5,9 +5,9 @@ type ResultType = {
 	posts: {
 		id: string;
 		content: string;
-		user_id: string;
-		user_name: string;
-		created_at: string;
+		userId: string;
+		userName: string;
+		createdAt: string;
 	}[];
 	length: number;
 };
@@ -37,17 +37,17 @@ export async function getList(
 }
 
 interface CreatePostArguments {
-	user_id: string;
+	userId: string;
 	token: string;
 	message: string;
 }
 
 export async function createPost({
-	user_id,
+	userId,
 	token,
 	message,
 }: CreatePostArguments) {
-	const data = { user_id, message };
+	const data = { user_id: userId, message };
 	const url = new URL(`${host}/post`);
 
 	try {

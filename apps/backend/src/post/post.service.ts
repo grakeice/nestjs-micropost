@@ -18,7 +18,7 @@ export class PostService {
 
 	async createPost(userId: number, message: string) {
 		const record = {
-			user_id: userId,
+			userId,
 			content: message,
 		};
 		return await this.microPostsRepository.save(record);
@@ -53,9 +53,9 @@ export class PostService {
 			posts: {
 				id: number;
 				content: string;
-				user_id: number;
-				user_name: string;
-				created_at: Date;
+				userId: number;
+				userName: string;
+				createdAt: Date;
 			}[];
 			length: number;
 		};
@@ -72,7 +72,7 @@ export class PostService {
 
 		if (!post) throw new NotFoundException();
 
-		if (post.user_id !== requesterId) {
+		if (post.userId !== requesterId) {
 			throw new ForbiddenException();
 		}
 

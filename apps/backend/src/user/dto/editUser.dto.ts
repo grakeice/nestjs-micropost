@@ -1,7 +1,7 @@
 import {
 	IsEmail,
 	IsNotEmpty,
-	IsNumberString,
+	IsNumber,
 	IsOptional,
 	IsString,
 	MaxLength,
@@ -10,7 +10,7 @@ import {
 
 export class EditUserDto {
 	@IsNotEmpty()
-	@IsNumberString()
+	@IsNumber()
 	id: number;
 
 	@IsOptional()

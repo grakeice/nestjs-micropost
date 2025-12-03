@@ -95,6 +95,7 @@ export class UserService {
 		if (!user) throw new NotFoundException();
 
 		// requester must be the user themself (or in future, an admin)
+
 		if (typeof requesterId === "number" && requesterId !== id) {
 			throw new ForbiddenException();
 		}
