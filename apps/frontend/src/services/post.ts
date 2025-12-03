@@ -57,7 +57,7 @@ export async function createPost({
 		console.log(res);
 		return res;
 	} catch {
-		toast.error("ポストの投稿に失敗しました。");
+		toast.error("ポストの投稿に失敗しました");
 	}
 }
 
