@@ -22,9 +22,9 @@ export class User {
 	@Column("varchar", { nullable: false })
 	email: string;
 
-	@CreateDateColumn()
-	readonly created_at?: Date;
+	@CreateDateColumn({ name: "created_at" })
+	readonly createdAt?: Date;
 
-	@UpdateDateColumn()
-	readonly updated_at?: Date;
+	@UpdateDateColumn({ name: "updated_at" })
+	readonly updatedAt?: Date;
 }

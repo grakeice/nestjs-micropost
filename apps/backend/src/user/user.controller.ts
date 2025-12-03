@@ -35,7 +35,7 @@ export class UserController {
 	@Put(":id")
 	@UseGuards(AuthGuard("jwt"))
 	async editUserInfo(
-		@Param("id") id: number,
+		@Param("id") id: string,
 		@Body("name") name: string,
 		@Body("email") email: string,
 		@Body("password") password: string,
@@ -46,7 +46,7 @@ export class UserController {
 
 		await this.userService.updateUserInfo(
 			{
-				id,
+				id: Number(id),
 				name,
 				email,
 				password,

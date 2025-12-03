@@ -11,18 +11,18 @@ export class Auth {
 	@PrimaryGeneratedColumn()
 	readonly id: number;
 
-	@Column()
-	user_id: number;
+	@Column({ name: "user_id" })
+	userId: number;
 
 	@Column("varchar")
 	token: string;
 
-	@Column()
-	expire_at: Date;
+	@Column({ name: "expire_at" })
+	expireAt: Date;
 
-	@CreateDateColumn()
-	readonly created_at?: Date;
+	@CreateDateColumn({ name: "created_at" })
+	readonly createdAt?: Date;
 
-	@UpdateDateColumn()
-	readonly updated_at?: Date;
+	@UpdateDateColumn({ name: "updated_at" })
+	readonly updatedAt?: Date;
 }

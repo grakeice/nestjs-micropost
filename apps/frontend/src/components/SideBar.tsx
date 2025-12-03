@@ -55,7 +55,7 @@ export function SideBar({ ...props }: SideBarProps): JSX.Element {
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		await createPost({
-			user_id: String(userInfo.id),
+			userId: String(userInfo.id),
 			token: userInfo.token,
 			message: values.message,
 		});
