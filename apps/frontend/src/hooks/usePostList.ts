@@ -25,7 +25,7 @@ export function usePostList(
 					searchText,
 				);
 
-				const posts = data.posts;
+				const posts = data?.posts;
 
 				const postList: Post[] = [];
 
